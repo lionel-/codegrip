@@ -4,6 +4,10 @@ parse_xml <- function(file = "", text = NULL) {
   xml2::read_xml(xml_text)
 }
 
+xml_attr_int <- function(data, attr) {
+  as.integer(xml2::xml_attr(data, attr))
+}
+
 as_position <- function(line, col, ..., data) {
   max <- max_col(data) + 1L
   line * max + col
@@ -14,21 +18,21 @@ as_position <- function(line, col, ..., data) {
 max_col <- function(data) {
   nodes <- xml2::xml_find_all(data, "//*")
 
-  col1 <- as.integer(xml2::xml_attr(nodes, "col1"))
-  col2 <- as.integer(xml2::xml_attr(nodes, "col2"))
+  col1 <- xml_attr_int(nodes, "col1")
+  col2 <- xml_attr_int(nodes, "col2")
 
   max(col1, col2, na.rm = TRUE)
 }
 
 node_positions <- function(data) {
-  line1 <- as.integer(xml2::xml_attr(data, "line1"))
-  line2 <- as.integer(xml2::xml_attr(data, "line2"))
+  line1 <- xml_attr_int(data, "line1")
+  line2 <- xml_attr_int(data, "line2")
 
-  col1 <- as.integer(xml2::xml_attr(data, "col1"))
-  col2 <- as.integer(xml2::xml_attr(data, "col2"))
+  col1 <- xml_attr_int(data, "col1")
+  col2 <- xml_attr_int(data, "col2")
 
-  start <- as.integer(xml2::xml_attr(data, "start"))
-  end <- as.integer(xml2::xml_attr(data, "end"))
+  start <- xml_attr_int(data, "start")
+  end <- xml_attr_int(data, "end")
 
   data.frame(
     line1 = line1,
