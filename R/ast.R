@@ -40,6 +40,29 @@ node_positions <- function(data) {
   )
 }
 
+node_text <- function(data, path) {
+  pos <- node_positions(data)
+
+  if (nrow(pos) != 1) {
+    abort("Can't find positions in `data`.")
+  }
+
+  lines <- readLines(path)
+
+  line_range <- pos$line1:pos$line2
+  lines <- lines[line_range]
+
+  if (!length(lines)) {
+    abort("Can't find text in `data`.")
+  }
+
+  n <- length(lines)
+  lines[[n]] <- substr(lines[[n]], 1, pos$col2)
+  lines[[1]] <- substr(lines[[1]], pos$col1, nchar(lines[[1]]))
+
+  paste(lines, collapse = "\n")
+}
+
 locate_node <- function(set, line, col, ..., data) {
   pos <- node_positions(set)
 

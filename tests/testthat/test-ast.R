@@ -25,3 +25,26 @@ test_that("can find function call node for position", {
     node_positions(node)[1:4]
   })
 })
+
+test_that("can retrieve function call text", {
+  path <- test_path("fixtures", "calls.R")
+  xml <- parse_xml(path)
+
+  expect_snapshot({
+    "Cursor on `function`"
+    node <- find_function_call(2, 13, data = xml)
+    cat_line(node_text(node, path))
+
+    "Cursor on `quux`"
+    node <- find_function_call(4, 4, data = xml)
+    cat_line(node_text(node, path))
+
+    "Cursor on complex call"
+    node <- find_function_call(5, 3, data = xml)
+    cat_line(node_text(node, path))
+
+    "Cursor on `hop`"
+    node <- find_function_call(11, 1, data = xml)
+    cat_line(node_text(node, path))
+  })
+})
