@@ -4,6 +4,17 @@ parse_xml <- function(file = "", text = NULL) {
   read_xml(xml_text)
 }
 
+parse_xml_one <- function(file = "", text = NULL) {
+  out <- parse_xml(file, text)
+  out <- xml_children(out)
+
+  if (length(out) != 1) {
+    abort("XML document must be length 1.")
+  }
+
+  out[[1]]
+}
+
 xml_attr_int <- function(data, attr) {
   as.integer(xml_attr(data, attr))
 }
