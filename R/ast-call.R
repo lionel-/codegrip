@@ -32,7 +32,7 @@ node_is_call <- function(node) {
   check_node(node)
 
   children <- xml_children(node)
-  if (length(children) != 4) {
+  if (length(children) < 3) {
     return(FALSE)
   }
 
