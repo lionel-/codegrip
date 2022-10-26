@@ -94,3 +94,14 @@ test_that("check_call() detects calls", {
     (expect_error(fn(expr)))
   })
 })
+
+test_that("can find arguments", {
+  text <- "foo(1, 2, 3)"
+  expr <- parse_xml_one(text = text)
+  args <- node_call_arguments(expr)
+
+  expect_equal(
+    lapply(args, \(x) node_text(x, text = text)),
+    list("1", "2", "3")
+  )
+})

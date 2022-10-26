@@ -38,3 +38,13 @@ node_is_call <- function(node) {
 
   identical(xml_name(children[[2]]), "OP-LEFT-PAREN")
 }
+
+node_call_arguments <- function(node) {
+  check_call(node)
+
+  set <- xml_children(node)
+  set <- set[-c(1:2, length(set))]
+  set <- set[xml_name(set) != "OP-COMMA"]
+
+  set
+}
