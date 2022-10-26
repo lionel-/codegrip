@@ -48,3 +48,14 @@ node_call_arguments <- function(node) {
 
   set
 }
+
+node_call_is_single_line <- function(node) {
+  check_call(node)
+
+  set <- xml_children(node)
+
+  line1 <- xml_attr_int(set, "line1")
+  line2 <- xml_attr_int(set, "line2")
+
+  length(unique(c(line1, line2))) == 1
+}

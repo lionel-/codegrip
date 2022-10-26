@@ -105,3 +105,17 @@ test_that("can find arguments", {
     list("1", "2", "3")
   )
 })
+
+test_that("can detect single line calls", {
+  expr <- parse_xml_one(text = "foo(1, 2, 3)")
+  expect_true(node_call_is_single_line(expr))
+
+  expr <- parse_xml_one(text = "\nfoo(1, 2, 3)\n")
+  expect_true(node_call_is_single_line(expr))
+
+  expr <- parse_xml_one(text = "foo(1,\n 2, 3)")
+  expect_false(node_call_is_single_line(expr))
+
+  expr <- parse_xml_one(text = "foo(1, 2, 3\n)")
+  expect_false(node_call_is_single_line(expr))
+})
