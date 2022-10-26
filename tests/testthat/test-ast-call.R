@@ -33,19 +33,19 @@ test_that("can retrieve function call text", {
   expect_snapshot({
     "Cursor on `function`"
     node <- find_function_call(2, 13, data = xml)
-    cat_line(node_text(node, path))
+    cat_line(node_text(node, file = path))
 
     "Cursor on `quux`"
     node <- find_function_call(4, 4, data = xml)
-    cat_line(node_text(node, path))
+    cat_line(node_text(node, file = path))
 
     "Cursor on complex call"
     node <- find_function_call(5, 3, data = xml)
-    cat_line(node_text(node, path))
+    cat_line(node_text(node, file = path))
 
     "Cursor on `hop`"
     node <- find_function_call(11, 1, data = xml)
-    cat_line(node_text(node, path))
+    cat_line(node_text(node, file = path))
   })
 })
 

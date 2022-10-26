@@ -55,19 +55,14 @@ node_positions <- function(data) {
   )
 }
 
-node_text <- function(data, file = "", text = NULL) {
+node_text <- function(data, ..., file = "", text = NULL) {
   pos <- node_positions(data)
 
   if (nrow(pos) != 1) {
     abort("Can't find positions in `data`.")
   }
 
-  if (is_null(text)) {
-    lines <- readLines(file)
-  } else {
-    lines <- strsplit(text, "\n")[[1]]
-  }
-
+  lines <- lines(file, text)
   line_range <- pos$line1:pos$line2
   lines <- lines[line_range]
 

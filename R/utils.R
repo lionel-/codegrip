@@ -11,3 +11,13 @@ is_rstudio <- function() {
 cat_line <- function(...) {
   cat(paste0(..., "\n", collapse = ""))
 }
+
+lines <- function(file = "", text = NULL, call = caller_env()) {
+  if (!is_null(text)) {
+    strsplit(text, "\n")[[1]]
+  } else if (nzchar(file)) {
+    readLines(file)
+  } else {
+    abort("Must supply either `text` or `file`.", call = call)
+  }
+}
