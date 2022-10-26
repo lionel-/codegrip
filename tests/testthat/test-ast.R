@@ -14,5 +14,14 @@ test_that("can find function call node for position", {
   }
 
   call_nodes <- lapply(seq_along(lines), nodes)
-  expect_snapshot(call_nodes)
+  expect_snapshot({
+    "Node locations of function calls for all combinations of line and col"
+    call_nodes
+  })
+
+  node <- find_function_call(4, 4, data = xml)
+  expect_snapshot({
+    "Positions of function call at 4:4"
+    node_positions(node)[1:4]
+  })
 })

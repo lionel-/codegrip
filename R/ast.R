@@ -20,7 +20,7 @@ max_col <- function(data) {
   max(col1, col2, na.rm = TRUE)
 }
 
-positions <- function(data) {
+node_positions <- function(data) {
   line1 <- as.integer(xml2::xml_attr(data, "line1"))
   line2 <- as.integer(xml2::xml_attr(data, "line2"))
 
@@ -40,12 +40,8 @@ positions <- function(data) {
   )
 }
 
-find_function_calls <- function(xml) {
-  xml2::xml_find_all(xml, "//*/*[following-sibling::OP-LEFT-PAREN]/..")
-}
-
 locate_node <- function(set, line, col, ..., data) {
-  pos <- positions(set)
+  pos <- node_positions(set)
 
   start <- pos$start
   end <- pos$end
@@ -61,4 +57,20 @@ locate_node <- function(set, line, col, ..., data) {
 
   # There shouldn't be multiple matches but just in case
   innermost[[1]]
+}
+
+# This also selects function definitions
+find_function_calls <- function(data) {
+  xml2::xml_find_all(data, "//*/*[following-sibling::OP-LEFT-PAREN]/..")
+}
+
+find_function_call <- function(line, col, ..., data) {
+  calls <- find_function_calls(data)
+  loc <- locate_node(calls, line, col, data = data)
+
+  if (loc) {
+    calls[[loc]]
+  } else {
+    NULL
+  }
 }

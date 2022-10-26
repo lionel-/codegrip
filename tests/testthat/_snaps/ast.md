@@ -1,6 +1,7 @@
 # can find function call node for position
 
     Code
+      # Node locations of function calls for all combinations of line and col
       call_nodes
     Output
       [[1]]
@@ -39,4 +40,13 @@
       [[12]]
       [1] 5
       
+
+---
+
+    Code
+      # Positions of function call at 4:4
+      node_positions(node)[1:4]
+    Output
+        line1 col1 line2 col2
+      1     4    3     4   21
 
