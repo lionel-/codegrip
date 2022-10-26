@@ -48,3 +48,33 @@ test_that("can retrieve function call text", {
     cat_line(node_text(node, path))
   })
 })
+
+test_that("find_function_calls() selects from current node", {
+  text <- "foo(bar())"
+  xml <- parse_xml(text = text)
+
+  calls <- find_function_calls(xml)
+  expect_length(calls, 2)
+
+  expect_equal(
+    node_text(calls[[1]], text = text),
+    "foo(bar())"
+  )
+  expect_equal(
+    node_text(calls[[2]], text = text),
+    "bar()"
+  )
+
+  expect_equal(
+    find_function_calls(calls[[1]]),
+    calls
+  )
+
+  inner_calls <- find_function_calls(calls[[2]])
+  expect_length(inner_calls, 1)
+
+  expect_equal(
+    inner_calls[[1]],
+    calls[[2]]
+  )
+})

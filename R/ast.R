@@ -44,14 +44,18 @@ node_positions <- function(data) {
   )
 }
 
-node_text <- function(data, path) {
+node_text <- function(data, file = "", text = NULL) {
   pos <- node_positions(data)
 
   if (nrow(pos) != 1) {
     abort("Can't find positions in `data`.")
   }
 
-  lines <- readLines(path)
+  if (is_null(text)) {
+    lines <- readLines(file)
+  } else {
+    lines <- strsplit(text, "\n")[[1]]
+  }
 
   line_range <- pos$line1:pos$line2
   lines <- lines[line_range]
@@ -88,7 +92,7 @@ locate_node <- function(set, line, col, ..., data) {
 
 # This also selects function definitions
 find_function_calls <- function(data) {
-  xml2::xml_find_all(data, "//*/*[following-sibling::OP-LEFT-PAREN]/..")
+  xml2::xml_find_all(data, ".//*[following-sibling::OP-LEFT-PAREN]/..")
 }
 
 find_function_call <- function(line, col, ..., data) {
