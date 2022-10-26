@@ -90,18 +90,14 @@ locate_node <- function(set, line, col, ..., data) {
   innermost[[1]]
 }
 
-# This also selects function definitions
-find_function_calls <- function(data) {
-  xml2::xml_find_all(data, ".//*[following-sibling::OP-LEFT-PAREN]/..")
-}
-
-find_function_call <- function(line, col, ..., data) {
-  calls <- find_function_calls(data)
-  loc <- locate_node(calls, line, col, data = data)
-
-  if (loc) {
-    calls[[loc]]
-  } else {
-    NULL
+check_node <- function(node,
+                       arg = caller_arg(node),
+                       call = caller_env()) {
+  if (!inherits(node, "xml_node")) {
+    abort(
+      sprintf("`%s` must be an XML node.", arg),
+      call = call,
+      arg = arg
+    )
   }
 }

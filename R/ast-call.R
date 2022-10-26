@@ -13,3 +13,28 @@ find_function_call <- function(line, col, ..., data) {
     NULL
   }
 }
+
+check_call <- function(node,
+                       arg = caller_arg(node),
+                       call = caller_env()) {
+  check_node(node, arg = arg, call = call)
+
+  if (!node_is_call(node)) {
+    abort(
+      sprintf("`%s` must be a function call node.", arg),
+      arg = arg,
+      call = call
+    )
+  }
+}
+
+node_is_call <- function(node) {
+  check_node(node)
+
+  children <- xml2::xml_children(node)
+  if (length(children) != 4) {
+    return(FALSE)
+  }
+
+  identical(xml2::xml_name(children[[2]]), "OP-LEFT-PAREN")
+}

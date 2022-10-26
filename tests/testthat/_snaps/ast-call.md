@@ -85,3 +85,12 @@
         hip
       )
 
+# check_call() detects calls
+
+    Code
+      (expect_error(fn(expr)))
+    Output
+      <error/rlang_error>
+      Error in `fn()`:
+      ! `x` must be a function call node.
+
