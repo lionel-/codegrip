@@ -1,6 +1,6 @@
 # This also selects function definitions
 find_function_calls <- function(data) {
-  xml2::xml_find_all(data, ".//*[following-sibling::OP-LEFT-PAREN]/..")
+  xml_find_all(data, ".//*[following-sibling::OP-LEFT-PAREN]/..")
 }
 
 find_function_call <- function(line, col, ..., data) {
@@ -31,10 +31,10 @@ check_call <- function(node,
 node_is_call <- function(node) {
   check_node(node)
 
-  children <- xml2::xml_children(node)
+  children <- xml_children(node)
   if (length(children) != 4) {
     return(FALSE)
   }
 
-  identical(xml2::xml_name(children[[2]]), "OP-LEFT-PAREN")
+  identical(xml_name(children[[2]]), "OP-LEFT-PAREN")
 }

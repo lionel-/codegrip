@@ -81,11 +81,11 @@ test_that("find_function_calls() selects from current node", {
 
 test_that("check_call() detects calls", {
   xml <- parse_xml(text = "foo(bar())")
-  expr <- xml2::xml_children(xml)[[1]]
+  expr <- xml_children(xml)[[1]]
   expect_true(node_is_call(expr))
 
   xml <- parse_xml(text = "foo + bar")
-  expr <- xml2::xml_children(xml)[[1]]
+  expr <- xml_children(xml)[[1]]
   expect_false(node_is_call(expr))
 
   fn <- function(x) check_call(x)

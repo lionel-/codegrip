@@ -1,11 +1,11 @@
 parse_xml <- function(file = "", text = NULL) {
   data <- utils::getParseData(parse(file, text = text))
   xml_text <- xmlparsedata::xml_parse_data(data)
-  xml2::read_xml(xml_text)
+  read_xml(xml_text)
 }
 
 xml_attr_int <- function(data, attr) {
-  as.integer(xml2::xml_attr(data, attr))
+  as.integer(xml_attr(data, attr))
 }
 
 as_position <- function(line, col, ..., data) {
@@ -16,7 +16,7 @@ as_position <- function(line, col, ..., data) {
 # Useful to recreate a position in the same dimension than
 # xml_parse_data()'s `start` and `end` attributes
 max_col <- function(data) {
-  nodes <- xml2::xml_find_all(data, "//*")
+  nodes <- xml_find_all(data, "//*")
 
   col1 <- xml_attr_int(nodes, "col1")
   col2 <- xml_attr_int(nodes, "col2")
