@@ -107,3 +107,17 @@ check_node <- function(node,
     )
   }
 }
+
+node_indentation <- function(node, ..., file = "", text = NULL) {
+  check_node(node)
+
+  line <- xml_attr_int(node, "line1")
+  line_text <- lines(file, text)[[line]]
+
+  # Replace tabs by spaces
+  # FIXME: Hardcoded indent level
+  line_text <- gsub("\t", strrep(" ", 2), line_text)
+
+  indent <- regexpr("[^[:space:]]", line_text) - 1L
+  max(indent, 0L)
+}
