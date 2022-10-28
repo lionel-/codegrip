@@ -107,15 +107,28 @@ test_that("can find arguments", {
 })
 
 test_that("can detect single line calls", {
+  expr <- parse_xml_one(text = "foo()")
+  expect_true(node_call_is_horizontal(expr))
+
+  # Or should this be treated as vertical?
+  expr <- parse_xml_one(text = "foo(\n)")
+  expect_true(node_call_is_horizontal(expr))
+
   expr <- parse_xml_one(text = "foo(1, 2, 3)")
-  expect_true(node_call_is_single_line(expr))
+  expect_true(node_call_is_horizontal(expr))
 
   expr <- parse_xml_one(text = "\nfoo(1, 2, 3)\n")
-  expect_true(node_call_is_single_line(expr))
+  expect_true(node_call_is_horizontal(expr))
 
   expr <- parse_xml_one(text = "foo(1,\n 2, 3)")
-  expect_false(node_call_is_single_line(expr))
+  expect_true(node_call_is_horizontal(expr))
 
   expr <- parse_xml_one(text = "foo(1, 2, 3\n)")
-  expect_false(node_call_is_single_line(expr))
+  expect_true(node_call_is_horizontal(expr))
+
+  expr <- parse_xml_one(text = "foo(\n1, 2, 3)")
+  expect_false(node_call_is_horizontal(expr))
+
+  expr <- parse_xml_one(text = "foo(\n\n1, 2, 3)")
+  expect_false(node_call_is_horizontal(expr))
 })

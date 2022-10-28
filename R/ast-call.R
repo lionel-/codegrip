@@ -49,13 +49,17 @@ node_call_arguments <- function(node) {
   set
 }
 
-node_call_is_single_line <- function(node) {
+node_call_is_horizontal <- function(node) {
   check_call(node)
 
   set <- xml_children(node)
 
-  line1 <- xml_attr_int(set, "line1")
-  line2 <- xml_attr_int(set, "line2")
+  if (length(set) <= 3) {
+    return(TRUE)
+  }
 
-  length(unique(c(line1, line2))) == 1
+  # Simple heuristic: If first argument is on the same line as the
+  # opening paren, it's horizontal. Otherwise, it's vertical.
+  line1 <- xml_attr_int(set, "line1")
+  identical(line1[[2]], line1[[3]])
 }
