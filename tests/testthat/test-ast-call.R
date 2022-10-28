@@ -172,3 +172,8 @@ test_that("can reshape call wider", {
     print_wider("list(\n  1,\n  foo(\n    bar\n  ),\n  3)")
   })
 })
+
+test_that("can detect function defs", {
+  def <- parse_xml_one(parse_info(text = "function() NULL"))
+  expect_true(node_call_is_function_def(def))
+})

@@ -66,6 +66,17 @@ node_call_is_horizontal <- function(node) {
   identical(line1[[2]], line1[[3]])
 }
 
+node_call_is_function_def <- function(node) {
+  check_call(node)
+
+  set <- xml_children(node)
+  if (length(set) <= 3) {
+    return(FALSE)
+  }
+
+  identical(xml_name(set[[1]]), "FUNCTION")
+}
+
 node_call_longer <- function(node, ..., info) {
   check_call(node)
 
