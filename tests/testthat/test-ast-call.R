@@ -1,6 +1,6 @@
 test_that("can find function call node for position", {
   path <- test_path("fixtures", "calls.R")
-  xml <- parse_xml(path)
+  xml <- parse_xml(parse_info(path))
   calls <- find_function_calls(xml)
   lines <- readLines(path)
 
@@ -28,40 +28,41 @@ test_that("can find function call node for position", {
 
 test_that("can retrieve function call text", {
   path <- test_path("fixtures", "calls.R")
-  xml <- parse_xml(path)
+  info <- parse_info(path)
+  xml <- parse_xml(info)
 
   expect_snapshot({
     "Cursor on `function`"
     node <- find_function_call(2, 13, data = xml)
-    cat_line(node_text(node, file = path))
+    cat_line(node_text(node, info = info))
 
     "Cursor on `quux`"
     node <- find_function_call(4, 4, data = xml)
-    cat_line(node_text(node, file = path))
+    cat_line(node_text(node, info = info))
 
     "Cursor on complex call"
     node <- find_function_call(5, 3, data = xml)
-    cat_line(node_text(node, file = path))
+    cat_line(node_text(node, info = info))
 
     "Cursor on `hop`"
     node <- find_function_call(11, 1, data = xml)
-    cat_line(node_text(node, file = path))
+    cat_line(node_text(node, info = info))
   })
 })
 
 test_that("find_function_calls() selects from current node", {
-  text <- "foo(bar())"
-  xml <- parse_xml(text = text)
+  info <- parse_info(text = "foo(bar())")
+  xml <- parse_xml(info)
 
   calls <- find_function_calls(xml)
   expect_length(calls, 2)
 
   expect_equal(
-    node_text(calls[[1]], text = text),
+    node_text(calls[[1]], info = info),
     "foo(bar())"
   )
   expect_equal(
-    node_text(calls[[2]], text = text),
+    node_text(calls[[2]], info = info),
     "bar()"
   )
 
@@ -80,13 +81,13 @@ test_that("find_function_calls() selects from current node", {
 })
 
 test_that("check_call() detects calls", {
-  expr <- parse_xml_one(text = "foo()")
+  expr <- parse_xml_one(parse_info(text = "foo()"))
   expect_true(node_is_call(expr))
 
-  expr <- parse_xml_one(text = "foo(bar())")
+  expr <- parse_xml_one(parse_info(text = "foo(bar())"))
   expect_true(node_is_call(expr))
 
-  expr <- parse_xml_one(text = "foo + bar")
+  expr <- parse_xml_one(parse_info(text = "foo + bar"))
   expect_false(node_is_call(expr))
 
   fn <- function(x) check_call(x)
@@ -96,39 +97,39 @@ test_that("check_call() detects calls", {
 })
 
 test_that("can find arguments", {
-  text <- "foo(1, 2, 3)"
-  expr <- parse_xml_one(text = text)
+  info <- parse_info(text = "foo(1, 2, 3)")
+  expr <- parse_xml_one(info)
   args <- node_call_arguments(expr)
 
   expect_equal(
-    lapply(args, \(x) node_text(x, text = text)),
+    lapply(args, \(x) node_text(x, info = info)),
     list("1", "2", "3")
   )
 })
 
 test_that("can detect single line calls", {
-  expr <- parse_xml_one(text = "foo()")
+  expr <- parse_xml_one(parse_info(text = "foo()"))
   expect_true(node_call_is_horizontal(expr))
 
   # Or should this be treated as vertical?
-  expr <- parse_xml_one(text = "foo(\n)")
+  expr <- parse_xml_one(parse_info(text = "foo(\n)"))
   expect_true(node_call_is_horizontal(expr))
 
-  expr <- parse_xml_one(text = "foo(1, 2, 3)")
+  expr <- parse_xml_one(parse_info(text = "foo(1, 2, 3)"))
   expect_true(node_call_is_horizontal(expr))
 
-  expr <- parse_xml_one(text = "\nfoo(1, 2, 3)\n")
+  expr <- parse_xml_one(parse_info(text = "\nfoo(1, 2, 3)\n"))
   expect_true(node_call_is_horizontal(expr))
 
-  expr <- parse_xml_one(text = "foo(1,\n 2, 3)")
+  expr <- parse_xml_one(parse_info(text = "foo(1,\n 2, 3)"))
   expect_true(node_call_is_horizontal(expr))
 
-  expr <- parse_xml_one(text = "foo(1, 2, 3\n)")
+  expr <- parse_xml_one(parse_info(text = "foo(1, 2, 3\n)"))
   expect_true(node_call_is_horizontal(expr))
 
-  expr <- parse_xml_one(text = "foo(\n1, 2, 3)")
+  expr <- parse_xml_one(parse_info(text = "foo(\n1, 2, 3)"))
   expect_false(node_call_is_horizontal(expr))
 
-  expr <- parse_xml_one(text = "foo(\n\n1, 2, 3)")
+  expr <- parse_xml_one(parse_info(text = "foo(\n\n1, 2, 3)"))
   expect_false(node_call_is_horizontal(expr))
 })

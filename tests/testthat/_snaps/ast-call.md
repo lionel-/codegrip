@@ -55,7 +55,7 @@
     Code
       # Cursor on `function`
       node <- find_function_call(2, 13, data = xml)
-      cat_line(node_text(node, file = path))
+      cat_line(node_text(node, info = info))
     Output
       function(bar,
                       baz) {
@@ -66,20 +66,20 @@
     Code
       # Cursor on `quux`
       node <- find_function_call(4, 4, data = xml)
-      cat_line(node_text(node, file = path))
+      cat_line(node_text(node, info = info))
     Output
       quux(1, list(2), 3)
     Code
       # Cursor on complex call
       node <- find_function_call(5, 3, data = xml)
-      cat_line(node_text(node, file = path))
+      cat_line(node_text(node, info = info))
     Output
       (foo)(4,
         5)
     Code
       # Cursor on `hop`
       node <- find_function_call(11, 1, data = xml)
-      cat_line(node_text(node, file = path))
+      cat_line(node_text(node, info = info))
     Output
       hop(
         hip

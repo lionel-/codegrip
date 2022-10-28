@@ -1,11 +1,35 @@
-parse_xml <- function(file = "", text = NULL) {
-  data <- utils::getParseData(parse(file, text = text))
+parse_xml <- function(info) {
+  check_info(info)
+
+  data <- utils::getParseData(parse(info$file, text = info$text))
   xml_text <- xmlparsedata::xml_parse_data(data)
   read_xml(xml_text)
 }
 
-parse_xml_one <- function(file = "", text = NULL) {
-  out <- parse_xml(file, text)
+parse_info <- function(file = "", text = NULL) {
+  list(
+    file = file,
+    text = text
+  )
+}
+
+is_info <- function(x) {
+  is.list(x) && all(c("file", "text") %in% names(x))
+}
+check_info <- function(info,
+                       arg = caller_arg(info),
+                       call = caller_env()) {
+  if (!is_info(info)) {
+    abort(
+      sprintf("`%s` must be a list created by `parse_info()`.", arg),
+      call = call,
+      arg = arg
+    )
+  }
+}
+
+parse_xml_one <- function(info) {
+  out <- parse_xml(info)
   out <- xml_children(out)
 
   if (length(out) != 1) {
@@ -55,14 +79,14 @@ node_positions <- function(data) {
   )
 }
 
-node_text <- function(data, ..., file = "", text = NULL) {
+node_text <- function(data, ..., info) {
   pos <- node_positions(data)
 
   if (nrow(pos) != 1) {
     abort("Can't find positions in `data`.")
   }
 
-  lines <- lines(file, text)
+  lines <- lines(info)
   line_range <- pos$line1:pos$line2
   lines <- lines[line_range]
 
@@ -108,11 +132,11 @@ check_node <- function(node,
   }
 }
 
-node_indentation <- function(node, ..., file = "", text = NULL) {
+node_indentation <- function(node, ..., info) {
   check_node(node)
 
   line <- xml_attr_int(node, "line1")
-  line_text <- lines(file, text)[[line]]
+  line_text <- lines(info)[[line]]
 
   # Replace tabs by spaces
   # FIXME: Hardcoded indent level
