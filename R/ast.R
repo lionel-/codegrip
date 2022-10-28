@@ -44,6 +44,8 @@ xml_attr_int <- function(data, attr) {
 }
 
 as_position <- function(line, col, ..., data) {
+  check_dots_empty()
+
   max <- max_col(data) + 1L
   line * max + col
 }
@@ -80,6 +82,8 @@ node_positions <- function(data) {
 }
 
 node_text <- function(data, ..., info) {
+  check_dots_empty()
+
   pos <- node_positions(data)
 
   if (nrow(pos) != 1) {
@@ -102,6 +106,8 @@ node_text <- function(data, ..., info) {
 }
 
 locate_node <- function(set, line, col, ..., data) {
+  check_dots_empty()
+
   pos <- node_positions(set)
 
   start <- pos$start
@@ -133,6 +139,7 @@ check_node <- function(node,
 }
 
 node_indentation <- function(node, ..., info) {
+  check_dots_empty()
   check_node(node)
 
   line <- xml_attr_int(node, "line1")

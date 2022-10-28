@@ -4,6 +4,8 @@ find_function_calls <- function(data) {
 }
 
 find_function_call <- function(line, col, ..., data) {
+  check_dots_empty()
+
   calls <- find_function_calls(data)
   loc <- locate_node(calls, line, col, data = data)
 
