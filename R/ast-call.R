@@ -42,11 +42,15 @@ node_is_call <- function(node) {
 }
 
 node_call_arguments <- function(node) {
-  check_call(node)
+  if (inherits(node, "xml_nodeset")) {
+    set <- node
+  } else {
+    check_call(node)
+    set <- xml_children(node)
+  }
 
-  set <- xml_children(node)
-  set <- set[-c(1:2, length(set))]
-  set <- set[xml_name(set) != "OP-COMMA"]
+  set <- set[-1]
+  set <- set[xml_name(set) == "expr"]
 
   set
 }
@@ -93,20 +97,16 @@ node_call_longer <- function(node, ..., info) {
 
   fn <- paste0(node_text(set[[1]], info = info), "(\n")
 
-  args <- set[-c(1:2, c(-1, 0) + n)]
-  args <- map(args, function(node) {
-    if (xml_name(node) != "OP-COMMA") {
-      text <- node_text(node, info = info)
+  args <- node_call_arguments(set)
+  args <- map(args[-length(args)], function(node) {
+    text <- node_text(node, info = info)
 
-      # Increase indentation of multiline args
-      text <- gsub("\n", paste0("\n", indent_args), text)
+    # Increase indentation of multiline args
+    text <- gsub("\n", paste0("\n", indent_args), text)
 
-      paste0(indent_args, text, ",\n")
-    }
+    paste0(indent_args, text, ",\n")
   })
-
-  args <- as.character(compact(args))
-  args <- paste0(args, collapse = "")
+  args <- paste0(as.character(args), collapse = "")
 
   last <- paste0(
     indent_args,
