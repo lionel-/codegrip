@@ -173,3 +173,46 @@
           3
         )
 
+# can reshape call wider
+
+    Code
+      print_wider("list()")
+    Output
+      list()
+    Code
+      print_wider("list(\n  1\n)")
+    Output
+      list(1)
+    Code
+      print_wider("list(\n\n  1\n\n)")
+    Output
+      list(1)
+    Code
+      print_wider("list(\n  1, \n  2\n)")
+    Output
+      list(1, 2)
+    Code
+      print_wider("list(\n  1, \n  2, \n  3\n)")
+    Output
+      list(1, 2, 3)
+    Code
+      # Leading indentation is ignored
+      print_wider("  list()")
+    Output
+      list()
+    Code
+      print_wider("  list(\n  1\n)")
+    Output
+      list(1)
+    Code
+      print_wider("  list(\n\n  1\n\n,\n 2)")
+    Output
+      list(1, 2)
+    Code
+      # Multiline args are indented as is
+      print_wider("list(\n  1,\n  foo(\n    bar\n  ),\n  3)")
+    Output
+      list(1, foo(
+        bar
+      ), 3)
+

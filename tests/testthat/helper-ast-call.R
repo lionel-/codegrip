@@ -7,5 +7,15 @@ print_longer <- function(text) {
   )
 
   cat_line(text)
-  invisible(NULL)
+}
+
+print_wider <- function(text) {
+  info <- parse_info(text = text)
+
+  text <- node_call_wider(
+    parse_xml_one(info),
+    info = info
+  )
+
+  cat_line(text)
 }

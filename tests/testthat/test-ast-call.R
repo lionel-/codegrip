@@ -154,3 +154,21 @@ test_that("can reshape call longer", {
     print_longer("  list(1, foo(\n  bar\n), 3)")
   })
 })
+
+test_that("can reshape call wider", {
+  expect_snapshot({
+    print_wider("list()")
+    print_wider("list(\n  1\n)")
+    print_wider("list(\n\n  1\n\n)")
+    print_wider("list(\n  1, \n  2\n)")
+    print_wider("list(\n  1, \n  2, \n  3\n)")
+
+    "Leading indentation is ignored"
+    print_wider("  list()")
+    print_wider("  list(\n  1\n)")
+    print_wider("  list(\n\n  1\n\n,\n 2)")
+
+    "Multiline args are indented as is"
+    print_wider("list(\n  1,\n  foo(\n    bar\n  ),\n  3)")
+  })
+})

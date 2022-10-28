@@ -107,3 +107,35 @@ node_call_longer <- function(node, ..., info) {
 
   paste0(fn, args, last)
 }
+
+node_call_wider <- function(node, ..., info) {
+  check_call(node)
+
+  set <- xml_children(node)
+  n <- length(set)
+
+  if (n == 3) {
+    return(node_text(node, info = info))
+  }
+
+  fn <- paste0(node_text(set[[1]], info = info), "(")
+
+  args <- set[-c(1:2, c(-1, 0) + n)]
+  args <- map(args, function(node) {
+    if (xml_name(node) != "OP-COMMA") {
+      text <- node_text(node, info = info)
+
+      # Decrease indentation of multiline args
+      text <- gsub("\n(  |\t)", "\n", text)
+
+      paste0(text, ", ")
+    }
+  })
+
+  args <- as.character(compact(args))
+  args <- paste0(args, collapse = "")
+
+  last <- paste0(node_text(set[[n - 1]], info = info), ")")
+
+  paste0(fn, args, last)
+}
