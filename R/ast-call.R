@@ -65,3 +65,45 @@ node_call_is_horizontal <- function(node) {
   line1 <- xml_attr_int(set, "line1")
   identical(line1[[2]], line1[[3]])
 }
+
+node_call_longer <- function(node, ..., info) {
+  check_call(node)
+
+  set <- xml_children(node)
+  n <- length(set)
+
+  if (n == 3) {
+    return(node_text(node, info = info))
+  }
+
+  indent_n <- node_indentation(node, info = info)
+  indent <- strrep(" ", indent_n)
+  indent_args <- strrep(" ", indent_n + 2)
+
+  fn <- paste0(node_text(set[[1]], info = info), "(\n")
+
+  args <- set[-c(1:2, c(-1, 0) + n)]
+  args <- map(args, function(node) {
+    if (xml_name(node) != "OP-COMMA") {
+      text <- node_text(node, info = info)
+
+      # Increase indentation of multiline args
+      text <- gsub("\n", paste0("\n", indent_args), text)
+
+      paste0(indent_args, text, ",\n")
+    }
+  })
+
+  args <- as.character(compact(args))
+  args <- paste0(args, collapse = "")
+
+  last <- paste0(
+    indent_args,
+    node_text(set[[n - 1]], info = info),
+    "\n",
+    indent,
+    ")"
+  )
+
+  paste0(fn, args, last)
+}

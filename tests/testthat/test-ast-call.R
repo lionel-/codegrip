@@ -133,3 +133,24 @@ test_that("can detect single line calls", {
   expr <- parse_xml_one(parse_info(text = "foo(\n\n1, 2, 3)"))
   expect_false(node_call_is_horizontal(expr))
 })
+
+test_that("can reshape call longer", {
+  expect_snapshot({
+    print_longer("list()")
+    print_longer("list(1)")
+    print_longer("list(1, 2)")
+    print_longer("list(1, 2, 3)")
+
+    "Leading indentation is preserved. First line is not indented"
+    "because the reshaped text is meant to be inserted at the node"
+    "coordinates."
+    print_longer("  list()")
+    print_longer("  list(1)")
+    print_longer("  list(1, 2)")
+
+    "Multiline args are indented as is"
+    print_longer("list(1, foo(\nbar\n), 3)")
+    print_longer("list(1, foo(\n  bar\n), 3)")
+    print_longer("  list(1, foo(\n  bar\n), 3)")
+  })
+})

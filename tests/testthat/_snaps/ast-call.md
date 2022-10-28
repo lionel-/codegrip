@@ -94,3 +94,82 @@
       Error in `fn()`:
       ! `x` must be a function call node.
 
+# can reshape call longer
+
+    Code
+      print_longer("list()")
+    Output
+      list()
+    Code
+      print_longer("list(1)")
+    Output
+      list(
+        1
+      )
+    Code
+      print_longer("list(1, 2)")
+    Output
+      list(
+        1,
+        2
+      )
+    Code
+      print_longer("list(1, 2, 3)")
+    Output
+      list(
+        1,
+        2,
+        3
+      )
+    Code
+      # Leading indentation is preserved. First line is not indented
+      # because the reshaped text is meant to be inserted at the node
+      # coordinates.
+      print_longer("  list()")
+    Output
+      list()
+    Code
+      print_longer("  list(1)")
+    Output
+      list(
+          1
+        )
+    Code
+      print_longer("  list(1, 2)")
+    Output
+      list(
+          1,
+          2
+        )
+    Code
+      # Multiline args are indented as is
+      print_longer("list(1, foo(\nbar\n), 3)")
+    Output
+      list(
+        1,
+        foo(
+        bar
+        ),
+        3
+      )
+    Code
+      print_longer("list(1, foo(\n  bar\n), 3)")
+    Output
+      list(
+        1,
+        foo(
+          bar
+        ),
+        3
+      )
+    Code
+      print_longer("  list(1, foo(\n  bar\n), 3)")
+    Output
+      list(
+          1,
+          foo(
+            bar
+          ),
+          3
+        )
+
