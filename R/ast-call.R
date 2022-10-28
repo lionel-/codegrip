@@ -19,7 +19,7 @@ find_function_call <- function(line, col, ..., data) {
 check_call <- function(node,
                        arg = caller_arg(node),
                        call = caller_env()) {
-  check_node(node, arg = arg, call = call)
+  check_node_or_nodeset(node, arg = arg, call = call)
 
   if (!node_is_call(node)) {
     abort(
@@ -31,23 +31,27 @@ check_call <- function(node,
 }
 
 node_is_call <- function(node) {
-  check_node(node)
+  check_node_or_nodeset(node, arg = arg, call = call)
 
-  children <- xml_children(node)
-  if (length(children) < 3) {
+  if (inherits(node, "xml_node")) {
+    set <- xml_children(node)
+  } else {
+    set <- node
+  }
+  if (length(set) < 3) {
     return(FALSE)
   }
 
-  identical(xml_name(children[[2]]), "OP-LEFT-PAREN")
+  identical(xml_name(set[[2]]), "OP-LEFT-PAREN")
 }
 
 node_call_arguments <- function(node) {
   if (inherits(node, "xml_nodeset")) {
     set <- node
   } else {
-    check_call(node)
     set <- xml_children(node)
   }
+  check_call(set)
 
   set <- set[-1]
   set <- set[xml_name(set) == "expr"]

@@ -96,7 +96,7 @@ test_that("check_call() detects calls", {
   })
 })
 
-test_that("can find arguments", {
+test_that("can retrieve arguments of calls", {
   info <- parse_info(text = "foo(1, 2, 3)")
   expr <- parse_xml_one(info)
   args <- node_call_arguments(expr)

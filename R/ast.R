@@ -150,6 +150,18 @@ check_node_set <- function(set,
   }
 }
 
+check_node_or_nodeset <- function(node,
+                                  arg = caller_arg(node),
+                                  call = caller_env()) {
+  if (!inherits_any(node, c("xml_node", "xml_nodeset"))) {
+    abort(
+      sprintf("`%s` must be an XML node or nodeset.", arg),
+      call = call,
+      arg = arg
+    )
+  }
+}
+
 node_indentation <- function(node, ..., info) {
   check_dots_empty()
   check_node(node)
