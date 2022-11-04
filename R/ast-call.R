@@ -69,15 +69,17 @@ node_call_is_horizontal <- function(node) {
   check_call(node)
 
   set <- xml_children(node)
+  args <- node_call_arguments(set)
 
-  if (length(set) <= 3) {
+  if (!length(args)) {
     return(TRUE)
   }
 
   # Simple heuristic: If first argument is on the same line as the
   # opening paren, it's horizontal. Otherwise, it's vertical.
-  line1 <- xml_attr_int(set, "line1")
-  identical(line1[[2]], line1[[3]])
+  line1_arg <- min(xml_attr_int(args[[1]], "line1"))
+  line1_paren <- xml_attr_int(set[[2]], "line1")
+  identical(line1_arg, line1_paren)
 }
 
 node_call_is_function_def <- function(node) {
@@ -95,9 +97,10 @@ node_call_longer <- function(node, ..., info) {
   check_call(node)
 
   set <- xml_children(node)
-  n <- length(set)
+  args_nodes <- node_call_arguments(set)
+  n_args <- length(args_nodes)
 
-  if (n == 3) {
+  if (!n_args) {
     return(node_text(node, info = info))
   }
 
@@ -106,9 +109,6 @@ node_call_longer <- function(node, ..., info) {
   indent_args <- strrep(" ", indent_n + 2)
 
   fn <- paste0(node_text(set[[1]], info = info), "(\n")
-
-  args_nodes <- node_call_arguments(set)
-  n_args <- length(args_nodes)
 
   args <- map(args_nodes[-n_args], function(node) {
     text <- node_text(node, info = info)
@@ -135,16 +135,14 @@ node_call_wider <- function(node, ..., info) {
   check_call(node)
 
   set <- xml_children(node)
-  n <- length(set)
+  args_nodes <- node_call_arguments(set)
+  n_args <- length(args_nodes)
 
-  if (n == 3) {
+  if (!n_args) {
     return(node_text(node, info = info))
   }
 
   fn <- paste0(node_text(set[[1]], info = info), "(")
-
-  args_nodes <- node_call_arguments(set)
-  n_args <- length(args_nodes)
 
   args <- map(args_nodes[-n_args], function(node) {
     text <- node_text(node, info = info)
