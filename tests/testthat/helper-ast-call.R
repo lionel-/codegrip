@@ -19,3 +19,18 @@ as_wider <- function(text) {
     info = info
   )
 }
+
+expect_call_shape <- function(text, type) {
+  call <- sub("\\(", "funciton\\(", text)
+  expect_equal(
+    node_call_shape(p(call)),
+    type
+  )
+
+  def <- sub("\\(", "function\\(", text)
+  def <- sub("\\)[[:space:]]*$", "\\) NULL", def)
+  expect_equal(
+    node_call_shape(p(def)),
+    type
+  )
+}

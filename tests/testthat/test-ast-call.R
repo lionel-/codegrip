@@ -157,31 +157,26 @@ test_that("can retrieve arguments of function definitions", {
   )
 })
 
-test_that("can detect single line calls", {
-  expr <- parse_xml_one(parse_info(text = "foo()"))
-  expect_true(node_call_is_horizontal(expr))
+test_that("can detect call type", {
+  expect_call_shape("()", "wide")
+  expect_call_shape("(a)", "wide")
+  expect_call_shape("(a, b, c)", "wide")
+  expect_call_shape("\n(a, b, c)\n", "wide")
 
-  # Or should this be treated as vertical?
-  expr <- parse_xml_one(parse_info(text = "foo(\n)"))
-  expect_true(node_call_is_horizontal(expr))
+  # Aligned argument or paren determines dropped shape
+  expect_call_shape("(\n         )", "L")
+  expect_call_shape("(\n         a)", "L")
 
-  expr <- parse_xml_one(parse_info(text = "foo(1, 2, 3)"))
-  expect_true(node_call_is_horizontal(expr))
+  # Simple heuristic: first argument determines wide shape
+  expect_call_shape("(a,\n b, c)", "wide")
+  expect_call_shape("(a, b, c\n)", "wide")
+  expect_call_shape("(a, b = b(\n), c)", "wide")
 
-  expr <- parse_xml_one(parse_info(text = "\nfoo(1, 2, 3)\n"))
-  expect_true(node_call_is_horizontal(expr))
-
-  expr <- parse_xml_one(parse_info(text = "foo(1,\n 2, 3)"))
-  expect_true(node_call_is_horizontal(expr))
-
-  expr <- parse_xml_one(parse_info(text = "foo(1, 2, 3\n)"))
-  expect_true(node_call_is_horizontal(expr))
-
-  expr <- parse_xml_one(parse_info(text = "foo(\n1, 2, 3)"))
-  expect_false(node_call_is_horizontal(expr))
-
-  expr <- parse_xml_one(parse_info(text = "foo(\n\n1, 2, 3)"))
-  expect_false(node_call_is_horizontal(expr))
+  # Simple heuristic: unaligned argument or paren determines long shape
+  expect_call_shape("(\n)", "long")
+  expect_call_shape("(\na)", "long")
+  expect_call_shape("(\na, b, c)", "long")
+  expect_call_shape("(\n\na, b, c)", "long")
 })
 
 test_that("can reshape call longer", {

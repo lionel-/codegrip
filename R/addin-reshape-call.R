@@ -19,11 +19,12 @@ addin_reshape <- function() {
     return()
   }
 
-  if (node_call_is_horizontal(call)) {
-    reshaped <- node_call_longer(call, info = info)
-  } else {
-    reshaped <- node_call_wider(call, info = info)
-  }
+  reshaped <- switch(
+    node_call_shape(call),
+    wide = node_call_longer(call, info = info),
+    long = node_call_wider(call, info = info),
+    abort("TODO")
+  )
 
   pos <- node_positions(call)
   pos1 <- rstudioapi::document_position(pos$line1, pos$col1)

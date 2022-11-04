@@ -65,21 +65,56 @@ node_call_arguments <- function(node) {
   split_sep(set, xml_name(set) == "OP-COMMA")
 }
 
-node_call_is_horizontal <- function(node) {
+node_call_shape <- function(node) {
   check_call(node)
 
   set <- xml_children(node)
   args <- node_call_arguments(set)
 
+  parens <- node_call_parens(node)
+  left_paren <- parens[[1]]
+  right_paren <- parens[[2]]
+
   if (!length(args)) {
-    return(TRUE)
+    if (identical(xml_line1(left_paren), xml_line1(right_paren))) {
+      return("wide")
+    } else if (identical(xml_col1(left_paren), xml_col1(right_paren) - 1L)) {
+      return("L")
+    } else {
+      return("long")
+    }
   }
 
   # Simple heuristic: If first argument is on the same line as the
   # opening paren, it's horizontal. Otherwise, it's vertical.
-  line1_arg <- min(xml_line1(args[[1]]))
-  line1_paren <- xml_line1(set[[2]])
-  identical(line1_arg, line1_paren)
+  paren_line1 <- xml_line1(left_paren)
+  arg_line1 <- min(xml_line1(args[[1]]))
+
+  paren_col1 <- xml_col1(left_paren)
+  arg_col1 <- min(xml_col1(args[[1]]))
+
+  if (identical(paren_line1, arg_line1)) {
+    "wide"
+  } else if (identical(paren_col1, arg_col1 - 1L)) {
+    "L"
+  } else {
+    "long"
+  }
+}
+
+node_call_parens <- function(node) {
+  check_call(node)
+  set <- xml_children(node)
+
+  left <- set[[2]]
+
+  if (node_call_is_function_def(node)) {
+    right <- set[[length(set) - 1]]
+  } else {
+    right <- set[[length(set)]]
+  }
+
+  list(left = left, right = right)
 }
 
 node_call_is_function_def <- function(node) {
