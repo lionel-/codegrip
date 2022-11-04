@@ -90,15 +90,20 @@ node_call_shape <- function(node) {
   paren_line1 <- xml_line1(left_paren)
   arg_line1 <- min(xml_line1(args[[1]]))
 
-  paren_col1 <- xml_col1(left_paren)
-  arg_col1 <- min(xml_col1(args[[1]]))
+  if (!identical(paren_line1, arg_line1)) {
+    return("long")
+  }
+  if (length(args) <= 1) {
+    return("wide")
+  }
 
-  if (identical(paren_line1, arg_line1)) {
-    "wide"
-  } else if (identical(paren_col1, arg_col1 - 1L)) {
+  paren_col1 <- xml_col1(left_paren)
+  arg_col1 <- min(xml_col1(args[[2]]))
+
+  if (identical(paren_col1, arg_col1 - 1L)) {
     "L"
   } else {
-    "long"
+    "wide"
   }
 }
 

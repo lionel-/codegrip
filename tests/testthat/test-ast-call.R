@@ -163,9 +163,9 @@ test_that("can detect call type", {
   expect_call_shape("(a, b, c)", "wide")
   expect_call_shape("\n(a, b, c)\n", "wide")
 
-  # Aligned argument or paren determines dropped shape
+  # Aligned argument or paren determines L shape
   expect_call_shape("(\n         )", "L")
-  expect_call_shape("(\n         a)", "L")
+  expect_call_shape("(a,\n         b)", "L")
 
   # Simple heuristic: first argument determines wide shape
   expect_call_shape("(a,\n b, c)", "wide")
