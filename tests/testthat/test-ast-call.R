@@ -116,6 +116,35 @@ test_that("can retrieve arguments of calls", {
   )
 })
 
+test_that("can retrieve arguments of function definitions", {
+  info <- parse_info(text = "function(a, b, c) NULL")
+  expr <- parse_xml_one(info)
+  args <- node_call_arguments(expr)
+
+  expect_equal(
+    lapply(args, function(x) node_text(x, info = info)),
+    list("a", "b", "c")
+  )
+
+  info <- parse_info(text = "function(a = 1, b, c = 3) NULL")
+  expr <- parse_xml_one(info)
+  args <- node_call_arguments(expr)
+
+  expect_equal(
+    lapply(args, function(x) node_text(x, info = info)),
+    list("a = 1", "b", "c = 3")
+  )
+
+  info <- parse_info(text = "function(a = 1, b, c = 3 + \n4) NULL")
+  node <- parse_xml_one(info)
+  args <- node_call_arguments(node)
+
+  expect_equal(
+    lapply(args, function(x) node_text(x, info = info)),
+    list("a = 1", "b", "c = 3 + \n4")
+  )
+})
+
 test_that("can detect single line calls", {
   expr <- parse_xml_one(parse_info(text = "foo()"))
   expect_true(node_call_is_horizontal(expr))

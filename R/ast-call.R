@@ -53,7 +53,12 @@ node_call_arguments <- function(node) {
   }
   check_call(set)
 
-  # Remove function and parentheses
+  # Remove function def body
+  if (xml_name(set[[1]]) == "FUNCTION") {
+    set <- set[-length(set)]
+  }
+
+  # Remove function node and parentheses
   set <- set[-c(1:2, length(set))]
 
   # Split on comma
