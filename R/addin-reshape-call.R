@@ -29,7 +29,11 @@ addin_reshape_unsafe <- function() {
   if (node_call_is_function_def(call)) {
     reshaped <- switch(
       node_call_shape(call),
-      wide = node_call_longer(call, info = info, L = TRUE),
+      wide = if (length(node_call_arguments(call)) == 1) {
+        node_call_longer(call, info = info)
+      } else {
+        node_call_longer(call, info = info, L = TRUE)
+      },
       L = node_call_longer(call, info = info),
       long = node_call_wider(call, info = info),
       node_text(call)
