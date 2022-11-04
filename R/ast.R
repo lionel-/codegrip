@@ -129,6 +129,10 @@ node_text <- function(data, ..., info) {
   paste(lines, collapse = "\n")
 }
 
+node_list_text <- function(data, ..., info) {
+  lapply(data, node_text, info = info)
+}
+
 locate_node <- function(set, line, col, ..., data) {
   check_dots_empty()
 

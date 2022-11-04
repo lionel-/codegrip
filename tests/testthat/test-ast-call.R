@@ -102,7 +102,7 @@ test_that("can retrieve arguments of calls", {
   args <- node_call_arguments(expr)
 
   expect_equal(
-    lapply(args, function(x) node_text(x, info = info)),
+    node_list_text(args, info = info),
     list("1", "2", "3")
   )
 
@@ -111,7 +111,7 @@ test_that("can retrieve arguments of calls", {
   args <- node_call_arguments(node)
 
   expect_equal(
-    lapply(args, function(x) node_text(x, info = info)),
+    node_list_text(args, info = info),
     list("a = 1", "b", "c = 3 + \n4")
   )
 })
@@ -122,7 +122,7 @@ test_that("can retrieve arguments of function definitions", {
   args <- node_call_arguments(expr)
 
   expect_equal(
-    lapply(args, function(x) node_text(x, info = info)),
+    node_list_text(args, info = info),
     list("a", "b", "c")
   )
 
@@ -131,7 +131,7 @@ test_that("can retrieve arguments of function definitions", {
   args <- node_call_arguments(expr)
 
   expect_equal(
-    lapply(args, function(x) node_text(x, info = info)),
+    node_list_text(args, info = info),
     list("a = 1", "b", "c = 3")
   )
 
@@ -140,7 +140,7 @@ test_that("can retrieve arguments of function definitions", {
   args <- node_call_arguments(node)
 
   expect_equal(
-    lapply(args, function(x) node_text(x, info = info)),
+    node_list_text(args, info = info),
     list("a = 1", "b", "c = 3 + \n4")
   )
 })
