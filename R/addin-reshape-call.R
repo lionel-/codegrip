@@ -19,12 +19,23 @@ addin_reshape <- function() {
     return()
   }
 
-  reshaped <- switch(
-    node_call_shape(call),
-    wide = node_call_longer(call, info = info),
-    long = node_call_wider(call, info = info),
-    abort("TODO")
-  )
+  if (node_call_is_function_def(call)) {
+    reshaped <- switch(
+      node_call_shape(call),
+      wide = node_call_longer(call, info = info, L = TRUE),
+      L = node_call_longer(call, info = info),
+      long = node_call_wider(call, info = info),,
+      node_text(call)
+    )
+  } else {
+    reshaped <- switch(
+      node_call_shape(call),
+      wide = node_call_longer(call, info = info),
+      L = ,
+      long = node_call_wider(call, info = info),
+      node_text(call)
+    )
+  }
 
   pos <- node_positions(call)
   pos1 <- rstudioapi::document_position(pos$line1, pos$col1)

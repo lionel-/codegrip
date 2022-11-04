@@ -128,7 +128,7 @@ node_call_is_function_def <- function(node) {
   identical(xml_name(set[[1]]), "FUNCTION")
 }
 
-node_call_longer <- function(node, ..., info) {
+node_call_longer <- function(node, ..., L = FALSE, info) {
   check_call(node)
 
   set <- xml_children(node)
@@ -141,9 +141,32 @@ node_call_longer <- function(node, ..., info) {
 
   indent_n <- node_indentation(node, info = info)
   indent <- strrep(" ", indent_n)
-  indent_args <- strrep(" ", indent_n + 2)
 
-  fn <- paste0(node_text(set[[1]], info = info), "(\n")
+  fn <- node_text(set[[1]], info = info)
+
+  if (L) {
+    fn <- paste0(fn, "(")
+    left_paren <- node_call_parens(node)[[1]]
+    indent_args <- strrep(" ", xml_col2(left_paren))
+  } else {
+    fn <- paste0(fn, "(\n")
+    indent_args <- strrep(" ", indent_n + 2)
+  }
+
+  if (L) {
+    fn <- paste0(fn, node_text(args_nodes[[1]], info = info))
+
+    if (n_args == 1) {
+      return(paste0(fn, ")"))
+    }
+
+    if (n_args > 1) {
+      fn <- paste0(fn, ",\n")
+    }
+
+    n_args <- n_args - 1L
+    args_nodes <- args_nodes[-1]
+  }
 
   args <- map(args_nodes[-n_args], function(node) {
     text <- node_text(node, info = info)
@@ -158,8 +181,8 @@ node_call_longer <- function(node, ..., info) {
   last <- paste0(
     indent_args,
     node_text(args_nodes[[n_args]], info = info),
-    "\n",
-    indent,
+    if (!L) "\n",
+    if (!L) indent,
     ")"
   )
 

@@ -202,6 +202,29 @@ test_that("can reshape call longer", {
   })
 })
 
+test_that("can reshape call longer (L shape)", {
+  expect_snapshot({
+    print_longer_l("list()")
+    print_longer_l("list(1)")
+    print_longer_l("list(1, 2)")
+    print_longer_l("list(1, 2, 3)")
+    print_longer_l("list(a = 1, 2, c = 3)")
+
+    "Leading indentation is preserved. First line is not indented"
+    "because the reshaped text is meant to be inserted at the node"
+    "coordinates."
+    print_longer_l("  list()")
+    print_longer_l("  list(1)")
+    print_longer_l("  list(1, 2)")
+
+    "Multiline args are indented as is"
+    print_longer_l("list(1, foo(\nbar\n), 3)")
+    print_longer_l("list(1, foo(\n  bar\n), 3)")
+    print_longer_l("  list(1, foo(\n  bar\n), 3)")
+    print_longer_l("list(1, b =\n  2, 3)")
+  })
+})
+
 test_that("can reshape call wider", {
   expect_snapshot({
     print_wider("list()")

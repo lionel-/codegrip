@@ -190,6 +190,82 @@
         3
       )
 
+# can reshape call longer (L shape)
+
+    Code
+      print_longer_l("list()")
+    Output
+      list()
+    Code
+      print_longer_l("list(1)")
+    Output
+      list(1)
+    Code
+      print_longer_l("list(1, 2)")
+    Output
+      list(1,
+           2)
+    Code
+      print_longer_l("list(1, 2, 3)")
+    Output
+      list(1,
+           2,
+           3)
+    Code
+      print_longer_l("list(a = 1, 2, c = 3)")
+    Output
+      list(a = 1,
+           2,
+           c = 3)
+    Code
+      # Leading indentation is preserved. First line is not indented
+      # because the reshaped text is meant to be inserted at the node
+      # coordinates.
+      print_longer_l("  list()")
+    Output
+      list()
+    Code
+      print_longer_l("  list(1)")
+    Output
+      list(1)
+    Code
+      print_longer_l("  list(1, 2)")
+    Output
+      list(1,
+             2)
+    Code
+      # Multiline args are indented as is
+      print_longer_l("list(1, foo(\nbar\n), 3)")
+    Output
+      list(1,
+           foo(
+           bar
+           ),
+           3)
+    Code
+      print_longer_l("list(1, foo(\n  bar\n), 3)")
+    Output
+      list(1,
+           foo(
+             bar
+           ),
+           3)
+    Code
+      print_longer_l("  list(1, foo(\n  bar\n), 3)")
+    Output
+      list(1,
+             foo(
+               bar
+             ),
+             3)
+    Code
+      print_longer_l("list(1, b =\n  2, 3)")
+    Output
+      list(1,
+           b =
+             2,
+           3)
+
 # can reshape call wider
 
     Code
