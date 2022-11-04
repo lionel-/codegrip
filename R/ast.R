@@ -81,10 +81,34 @@ node_positions <- function(data) {
   )
 }
 
+merge_positions <- function(pos) {
+  line1 <- min(pos$line1)
+  line2 <- max(pos$line2)
+
+  min_lines <- pos$line1 == line1
+  max_lines <- pos$line2 == line2
+
+  col1 <- min(pos$col1[min_lines])
+  start <- min(pos$start[min_lines])
+
+  col2 <- max(pos$col2[max_lines])
+  end <- max(pos$end[max_lines])
+
+  data.frame(
+    line1 = line1,
+    col1 = col1,
+    line2 = line2,
+    col2 = col2,
+    start = start,
+    end = end
+  )
+}
+
 node_text <- function(data, ..., info) {
   check_dots_empty()
 
   pos <- node_positions(data)
+  pos <- merge_positions(pos)
 
   if (nrow(pos) != 1) {
     abort("Can't find positions in `data`.")

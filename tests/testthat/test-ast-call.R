@@ -102,8 +102,17 @@ test_that("can retrieve arguments of calls", {
   args <- node_call_arguments(expr)
 
   expect_equal(
-    lapply(args, \(x) node_text(x, info = info)),
+    lapply(args, function(x) node_text(x, info = info)),
     list("1", "2", "3")
+  )
+
+  info <- parse_info(text = "foo(a = 1, b, c = 3 + \n4)")
+  node <- parse_xml_one(info)
+  args <- node_call_arguments(node)
+
+  expect_equal(
+    lapply(args, function(x) node_text(x, info = info)),
+    list("a = 1", "b", "c = 3 + \n4")
   )
 })
 
@@ -140,6 +149,7 @@ test_that("can reshape call longer", {
     print_longer("list(1)")
     print_longer("list(1, 2)")
     print_longer("list(1, 2, 3)")
+    print_longer("list(a = 1, 2, c = 3)")
 
     "Leading indentation is preserved. First line is not indented"
     "because the reshaped text is meant to be inserted at the node"
@@ -152,6 +162,7 @@ test_that("can reshape call longer", {
     print_longer("list(1, foo(\nbar\n), 3)")
     print_longer("list(1, foo(\n  bar\n), 3)")
     print_longer("  list(1, foo(\n  bar\n), 3)")
+    print_longer("list(1, b =\n  2, 3)")
   })
 })
 
@@ -162,6 +173,7 @@ test_that("can reshape call wider", {
     print_wider("list(\n\n  1\n\n)")
     print_wider("list(\n  1, \n  2\n)")
     print_wider("list(\n  1, \n  2, \n  3\n)")
+    print_wider("list(\n  a = 1,\n  2,\n  c = 3\n)")
 
     "Leading indentation is ignored"
     print_wider("  list()")
@@ -170,6 +182,7 @@ test_that("can reshape call wider", {
 
     "Multiline args are indented as is"
     print_wider("list(\n  1,\n  foo(\n    bar\n  ),\n  3)")
+    print_wider("list(\n  1,\n  b =\n    2,\n  3\n)")
   })
 })
 

@@ -21,3 +21,11 @@ lines <- function(info, call = caller_env()) {
     abort("Must supply either `text` or `file`.", call = call)
   }
 }
+
+split_sep <- function(x, is_sep) {
+  stopifnot(
+    is_logical(is_sep)
+  )
+  groups <- cumsum(is_sep)[!is_sep]
+  unname(split(x[!is_sep], groups))
+}

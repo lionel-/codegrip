@@ -53,10 +53,11 @@ node_call_arguments <- function(node) {
   }
   check_call(set)
 
-  set <- set[-1]
-  set <- set[xml_name(set) == "expr"]
+  # Remove function and parentheses
+  set <- set[-c(1:2, length(set))]
 
-  set
+  # Split on comma
+  split_sep(set, xml_name(set) == "OP-COMMA")
 }
 
 node_call_is_horizontal <- function(node) {
@@ -101,8 +102,10 @@ node_call_longer <- function(node, ..., info) {
 
   fn <- paste0(node_text(set[[1]], info = info), "(\n")
 
-  args <- node_call_arguments(set)
-  args <- map(args[-length(args)], function(node) {
+  args_nodes <- node_call_arguments(set)
+  n_args <- length(args_nodes)
+
+  args <- map(args_nodes[-n_args], function(node) {
     text <- node_text(node, info = info)
 
     # Increase indentation of multiline args
@@ -114,7 +117,7 @@ node_call_longer <- function(node, ..., info) {
 
   last <- paste0(
     indent_args,
-    node_text(set[[n - 1]], info = info),
+    node_text(args_nodes[[n_args]], info = info),
     "\n",
     indent,
     ")"
@@ -135,22 +138,21 @@ node_call_wider <- function(node, ..., info) {
 
   fn <- paste0(node_text(set[[1]], info = info), "(")
 
-  args <- set[-c(1:2, c(-1, 0) + n)]
-  args <- map(args, function(node) {
-    if (xml_name(node) != "OP-COMMA") {
-      text <- node_text(node, info = info)
+  args_nodes <- node_call_arguments(set)
+  n_args <- length(args_nodes)
 
-      # Decrease indentation of multiline args
-      text <- gsub("\n(  |\t)", "\n", text)
+  args <- map(args_nodes[-n_args], function(node) {
+    text <- node_text(node, info = info)
 
-      paste0(text, ", ")
-    }
+    # Decrease indentation of multiline args
+    text <- gsub("\n(  |\t)", "\n", text)
+
+    paste0(text, ", ")
   })
 
   args <- as.character(compact(args))
   args <- paste0(args, collapse = "")
 
-  last <- paste0(node_text(set[[n - 1]], info = info), ")")
-
+  last <- paste0(node_text(args_nodes[[n_args]], info = info), ")")
   paste0(fn, args, last)
 }

@@ -122,6 +122,14 @@
         3
       )
     Code
+      print_longer("list(a = 1, 2, c = 3)")
+    Output
+      list(
+        a = 1,
+        2,
+        c = 3
+      )
+    Code
       # Leading indentation is preserved. First line is not indented
       # because the reshaped text is meant to be inserted at the node
       # coordinates.
@@ -172,6 +180,15 @@
           ),
           3
         )
+    Code
+      print_longer("list(1, b =\n  2, 3)")
+    Output
+      list(
+        1,
+        b =
+          2,
+        3
+      )
 
 # can reshape call wider
 
@@ -196,6 +213,10 @@
     Output
       list(1, 2, 3)
     Code
+      print_wider("list(\n  a = 1,\n  2,\n  c = 3\n)")
+    Output
+      list(a = 1, 2, c = 3)
+    Code
       # Leading indentation is ignored
       print_wider("  list()")
     Output
@@ -215,4 +236,9 @@
       list(1, foo(
         bar
       ), 3)
+    Code
+      print_wider("list(\n  1,\n  b =\n    2,\n  3\n)")
+    Output
+      list(1, b =
+        2, 3)
 
