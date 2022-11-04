@@ -181,67 +181,67 @@ test_that("can detect call type", {
 
 test_that("can reshape call longer", {
   expect_snapshot({
-    print_longer("list()")
-    print_longer("list(1)")
-    print_longer("list(1, 2)")
-    print_longer("list(1, 2, 3)")
-    print_longer("list(a = 1, 2, c = 3)")
+    print_longer("()")
+    print_longer("(a)")
+    print_longer("(b, c)")
+    print_longer("(a, b, c)")
+    print_longer("(a = 1, b, c = 3)")
 
     "Leading indentation is preserved. First line is not indented"
     "because the reshaped text is meant to be inserted at the node"
     "coordinates."
-    print_longer("  list()")
-    print_longer("  list(1)")
-    print_longer("  list(1, 2)")
+    print_longer("  ()")
+    print_longer("  (a)")
+    print_longer("  (a, b)")
 
     "Multiline args are indented as is"
-    print_longer("list(1, foo(\nbar\n), 3)")
-    print_longer("list(1, foo(\n  bar\n), 3)")
-    print_longer("  list(1, foo(\n  bar\n), 3)")
-    print_longer("list(1, b =\n  2, 3)")
+    print_longer("(a, b = foo(\nbar\n), c)")
+    print_longer("(a, b = foo(\n  bar\n), c)")
+    print_longer("  (a, b = foo(\n  bar\n), c)")
+    print_longer("(a, b =\n  2, c)")
   })
 })
 
 test_that("can reshape call longer (L shape)", {
   expect_snapshot({
-    print_longer_l("list()")
-    print_longer_l("list(1)")
-    print_longer_l("list(1, 2)")
-    print_longer_l("list(1, 2, 3)")
-    print_longer_l("list(a = 1, 2, c = 3)")
+    print_longer_l("()")
+    print_longer_l("(a)")
+    print_longer_l("(a, b)")
+    print_longer_l("(a, b, c)")
+    print_longer_l("(a = 1, b, c = 3)")
 
     "Leading indentation is preserved. First line is not indented"
     "because the reshaped text is meant to be inserted at the node"
     "coordinates."
-    print_longer_l("  list()")
-    print_longer_l("  list(1)")
-    print_longer_l("  list(1, 2)")
+    print_longer_l("  ()")
+    print_longer_l("  (a)")
+    print_longer_l("  (a, b)")
 
     "Multiline args are indented as is"
-    print_longer_l("list(1, foo(\nbar\n), 3)")
-    print_longer_l("list(1, foo(\n  bar\n), 3)")
-    print_longer_l("  list(1, foo(\n  bar\n), 3)")
-    print_longer_l("list(1, b =\n  2, 3)")
+    print_longer_l("(a, b = foo(\nbar\n), c)")
+    print_longer_l("(a, b = foo(\n  bar\n), c)")
+    print_longer_l("  (a, b = foo(\n  bar\n), c)")
+    print_longer_l("(a, b =\n  2, c)")
   })
 })
 
 test_that("can reshape call wider", {
   expect_snapshot({
-    print_wider("list()")
-    print_wider("list(\n  1\n)")
-    print_wider("list(\n\n  1\n\n)")
-    print_wider("list(\n  1, \n  2\n)")
-    print_wider("list(\n  1, \n  2, \n  3\n)")
-    print_wider("list(\n  a = 1,\n  2,\n  c = 3\n)")
+    print_wider("()")
+    print_wider("(\n  a\n)")
+    print_wider("(\n\n  a\n\n)")
+    print_wider("(\n  a, \n  b\n)")
+    print_wider("(\n  a, \n  b, \n  c\n)")
+    print_wider("(\n  a = 1,\n  b,\n  c = 3\n)")
 
     "Leading indentation is ignored"
-    print_wider("  list()")
-    print_wider("  list(\n  1\n)")
-    print_wider("  list(\n\n  1\n\n,\n 2)")
+    print_wider("  ()")
+    print_wider("  (\n  a\n)")
+    print_wider("  (\n\n  a\n\n,\n b)")
 
     "Multiline args are indented as is"
-    print_wider("list(\n  1,\n  foo(\n    bar\n  ),\n  3)")
-    print_wider("list(\n  1,\n  b =\n    2,\n  3\n)")
+    print_wider("(\n  a,\n  b = foo(\n    bar\n  ),\n  c)")
+    print_wider("(\n  a,\n  b =\n    2,\n  c\n)")
   })
 })
 

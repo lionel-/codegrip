@@ -97,224 +97,324 @@
 # can reshape call longer
 
     Code
-      print_longer("list()")
+      print_longer("()")
     Output
-      list()
+      foofybaz()
+      function() NULL
     Code
-      print_longer("list(1)")
+      print_longer("(a)")
     Output
-      list(
-        1
+      foofybaz(
+        a
       )
+      function(
+          a
+      ) NULL
     Code
-      print_longer("list(1, 2)")
+      print_longer("(b, c)")
     Output
-      list(
-        1,
-        2
+      foofybaz(
+        b,
+        c
       )
+      function(
+          b,
+          c
+      ) NULL
     Code
-      print_longer("list(1, 2, 3)")
+      print_longer("(a, b, c)")
     Output
-      list(
-        1,
-        2,
-        3
+      foofybaz(
+        a,
+        b,
+        c
       )
+      function(
+          a,
+          b,
+          c
+      ) NULL
     Code
-      print_longer("list(a = 1, 2, c = 3)")
+      print_longer("(a = 1, b, c = 3)")
     Output
-      list(
+      foofybaz(
         a = 1,
-        2,
+        b,
         c = 3
       )
+      function(
+          a = 1,
+          b,
+          c = 3
+      ) NULL
     Code
       # Leading indentation is preserved. First line is not indented
       # because the reshaped text is meant to be inserted at the node
       # coordinates.
-      print_longer("  list()")
+      print_longer("  ()")
     Output
-      list()
+        foofybaz()
+        function() NULL
     Code
-      print_longer("  list(1)")
+      print_longer("  (a)")
     Output
-      list(
-          1
+        foofybaz(
+          a
         )
+        function(
+            a
+        ) NULL
     Code
-      print_longer("  list(1, 2)")
+      print_longer("  (a, b)")
     Output
-      list(
-          1,
-          2
+        foofybaz(
+          a,
+          b
         )
+        function(
+            a,
+            b
+        ) NULL
     Code
       # Multiline args are indented as is
-      print_longer("list(1, foo(\nbar\n), 3)")
+      print_longer("(a, b = foo(\nbar\n), c)")
     Output
-      list(
-        1,
-        foo(
+      foofybaz(
+        a,
+        b = foo(
         bar
         ),
-        3
+        c
       )
+      function(
+          a,
+          b = foo(
+          bar
+          ),
+          c
+      ) NULL
     Code
-      print_longer("list(1, foo(\n  bar\n), 3)")
+      print_longer("(a, b = foo(\n  bar\n), c)")
     Output
-      list(
-        1,
-        foo(
+      foofybaz(
+        a,
+        b = foo(
           bar
         ),
-        3
+        c
       )
-    Code
-      print_longer("  list(1, foo(\n  bar\n), 3)")
-    Output
-      list(
-          1,
-          foo(
+      function(
+          a,
+          b = foo(
             bar
           ),
-          3
-        )
+          c
+      ) NULL
     Code
-      print_longer("list(1, b =\n  2, 3)")
+      print_longer("  (a, b = foo(\n  bar\n), c)")
     Output
-      list(
-        1,
+        foofybaz(
+          a,
+          b = foo(
+            bar
+          ),
+          c
+        )
+        function(
+            a,
+            b = foo(
+              bar
+            ),
+            c
+        ) NULL
+    Code
+      print_longer("(a, b =\n  2, c)")
+    Output
+      foofybaz(
+        a,
         b =
           2,
-        3
+        c
       )
+      function(
+          a,
+          b =
+            2,
+          c
+      ) NULL
 
 # can reshape call longer (L shape)
 
     Code
-      print_longer_l("list()")
+      print_longer_l("()")
     Output
-      list()
+      foofybaz()
+      function() NULL
     Code
-      print_longer_l("list(1)")
+      print_longer_l("(a)")
     Output
-      list(1)
+      foofybaz(a)
+      function(a) NULL
     Code
-      print_longer_l("list(1, 2)")
+      print_longer_l("(a, b)")
     Output
-      list(1,
-           2)
+      foofybaz(a,
+               b)
+      function(a,
+               b) NULL
     Code
-      print_longer_l("list(1, 2, 3)")
+      print_longer_l("(a, b, c)")
     Output
-      list(1,
-           2,
-           3)
+      foofybaz(a,
+               b,
+               c)
+      function(a,
+               b,
+               c) NULL
     Code
-      print_longer_l("list(a = 1, 2, c = 3)")
+      print_longer_l("(a = 1, b, c = 3)")
     Output
-      list(a = 1,
-           2,
-           c = 3)
+      foofybaz(a = 1,
+               b,
+               c = 3)
+      function(a = 1,
+               b,
+               c = 3) NULL
     Code
       # Leading indentation is preserved. First line is not indented
       # because the reshaped text is meant to be inserted at the node
       # coordinates.
-      print_longer_l("  list()")
+      print_longer_l("  ()")
     Output
-      list()
+        foofybaz()
+        function() NULL
     Code
-      print_longer_l("  list(1)")
+      print_longer_l("  (a)")
     Output
-      list(1)
+        foofybaz(a)
+        function(a) NULL
     Code
-      print_longer_l("  list(1, 2)")
+      print_longer_l("  (a, b)")
     Output
-      list(1,
-             2)
+        foofybaz(a,
+                 b)
+        function(a,
+                 b) NULL
     Code
       # Multiline args are indented as is
-      print_longer_l("list(1, foo(\nbar\n), 3)")
+      print_longer_l("(a, b = foo(\nbar\n), c)")
     Output
-      list(1,
-           foo(
-           bar
-           ),
-           3)
-    Code
-      print_longer_l("list(1, foo(\n  bar\n), 3)")
-    Output
-      list(1,
-           foo(
-             bar
-           ),
-           3)
-    Code
-      print_longer_l("  list(1, foo(\n  bar\n), 3)")
-    Output
-      list(1,
-             foo(
+      foofybaz(a,
+               b = foo(
                bar
-             ),
-             3)
+               ),
+               c)
+      function(a,
+               b = foo(
+               bar
+               ),
+               c) NULL
     Code
-      print_longer_l("list(1, b =\n  2, 3)")
+      print_longer_l("(a, b = foo(\n  bar\n), c)")
     Output
-      list(1,
-           b =
-             2,
-           3)
+      foofybaz(a,
+               b = foo(
+                 bar
+               ),
+               c)
+      function(a,
+               b = foo(
+                 bar
+               ),
+               c) NULL
+    Code
+      print_longer_l("  (a, b = foo(\n  bar\n), c)")
+    Output
+        foofybaz(a,
+                 b = foo(
+                   bar
+                 ),
+                 c)
+        function(a,
+                 b = foo(
+                   bar
+                 ),
+                 c) NULL
+    Code
+      print_longer_l("(a, b =\n  2, c)")
+    Output
+      foofybaz(a,
+               b =
+                 2,
+               c)
+      function(a,
+               b =
+                 2,
+               c) NULL
 
 # can reshape call wider
 
     Code
-      print_wider("list()")
+      print_wider("()")
     Output
-      list()
+      foofybaz()
+      function() NULL
     Code
-      print_wider("list(\n  1\n)")
+      print_wider("(\n  a\n)")
     Output
-      list(1)
+      foofybaz(a)
+      function(a) NULL
     Code
-      print_wider("list(\n\n  1\n\n)")
+      print_wider("(\n\n  a\n\n)")
     Output
-      list(1)
+      foofybaz(a)
+      function(a) NULL
     Code
-      print_wider("list(\n  1, \n  2\n)")
+      print_wider("(\n  a, \n  b\n)")
     Output
-      list(1, 2)
+      foofybaz(a, b)
+      function(a, b) NULL
     Code
-      print_wider("list(\n  1, \n  2, \n  3\n)")
+      print_wider("(\n  a, \n  b, \n  c\n)")
     Output
-      list(1, 2, 3)
+      foofybaz(a, b, c)
+      function(a, b, c) NULL
     Code
-      print_wider("list(\n  a = 1,\n  2,\n  c = 3\n)")
+      print_wider("(\n  a = 1,\n  b,\n  c = 3\n)")
     Output
-      list(a = 1, 2, c = 3)
+      foofybaz(a = 1, b, c = 3)
+      function(a = 1, b, c = 3) NULL
     Code
       # Leading indentation is ignored
-      print_wider("  list()")
+      print_wider("  ()")
     Output
-      list()
+        foofybaz()
+        function() NULL
     Code
-      print_wider("  list(\n  1\n)")
+      print_wider("  (\n  a\n)")
     Output
-      list(1)
+        foofybaz(a)
+        function(a) NULL
     Code
-      print_wider("  list(\n\n  1\n\n,\n 2)")
+      print_wider("  (\n\n  a\n\n,\n b)")
     Output
-      list(1, 2)
+        foofybaz(a, b)
+        function(a, b) NULL
     Code
       # Multiline args are indented as is
-      print_wider("list(\n  1,\n  foo(\n    bar\n  ),\n  3)")
+      print_wider("(\n  a,\n  b = foo(\n    bar\n  ),\n  c)")
     Output
-      list(1, foo(
+      foofybaz(a, b = foo(
         bar
-      ), 3)
+      ), c)
+      function(a, b = foo(
+        bar
+      ), c) NULL
     Code
-      print_wider("list(\n  1,\n  b =\n    2,\n  3\n)")
+      print_wider("(\n  a,\n  b =\n    2,\n  c\n)")
     Output
-      list(1, b =
-        2, 3)
+      foofybaz(a, b =
+        2, c)
+      function(a, b =
+        2, c) NULL
 

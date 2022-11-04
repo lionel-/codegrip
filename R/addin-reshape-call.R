@@ -24,7 +24,7 @@ addin_reshape <- function() {
       node_call_shape(call),
       wide = node_call_longer(call, info = info, L = TRUE),
       L = node_call_longer(call, info = info),
-      long = node_call_wider(call, info = info),,
+      long = node_call_wider(call, info = info),
       node_text(call)
     )
   } else {
