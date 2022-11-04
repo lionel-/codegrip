@@ -43,6 +43,25 @@ xml_attr_int <- function(data, attr) {
   as.integer(xml_attr(data, attr))
 }
 
+xml_line1 <- function(data) {
+  xml_attr_int(data, "line1")
+}
+xml_line2 <- function(data) {
+  xml_attr_int(data, "line2")
+}
+xml_col1 <- function(data) {
+  xml_attr_int(data, "col1")
+}
+xml_col2 <- function(data) {
+  xml_attr_int(data, "col2")
+}
+xml_start <- function(data) {
+  xml_attr_int(data, "start")
+}
+xml_end <- function(data) {
+  xml_attr_int(data, "end")
+}
+
 as_position <- function(line, col, ..., data) {
   check_dots_empty()
 
@@ -55,29 +74,21 @@ as_position <- function(line, col, ..., data) {
 max_col <- function(data) {
   nodes <- xml_find_all(data, "//*")
 
-  col1 <- xml_attr_int(nodes, "col1")
-  col2 <- xml_attr_int(nodes, "col2")
-
-  max(col1, col2, na.rm = TRUE)
+  max(
+    xml_col1(nodes),
+    xml_col2(nodes),
+    na.rm = TRUE
+  )
 }
 
 node_positions <- function(data) {
-  line1 <- xml_attr_int(data, "line1")
-  line2 <- xml_attr_int(data, "line2")
-
-  col1 <- xml_attr_int(data, "col1")
-  col2 <- xml_attr_int(data, "col2")
-
-  start <- xml_attr_int(data, "start")
-  end <- xml_attr_int(data, "end")
-
   data.frame(
-    line1 = line1,
-    col1 = col1,
-    line2 = line2,
-    col2 = col2,
-    start = start,
-    end = end
+    line1 = xml_line1(data),
+    col1 = xml_col1(data),
+    line2 = xml_line2(data),
+    col2 = xml_col2(data),
+    start = xml_start(data),
+    end = xml_end(data)
   )
 }
 
@@ -194,7 +205,7 @@ node_indentation <- function(node, ..., info) {
   check_dots_empty()
   check_node(node)
 
-  line <- xml_attr_int(node, "line1")
+  line <- xml_line1(node)
   line_text <- lines(info)[[line]]
 
   # Replace tabs by spaces

@@ -77,8 +77,8 @@ node_call_is_horizontal <- function(node) {
 
   # Simple heuristic: If first argument is on the same line as the
   # opening paren, it's horizontal. Otherwise, it's vertical.
-  line1_arg <- min(xml_attr_int(args[[1]], "line1"))
-  line1_paren <- xml_attr_int(set[[2]], "line1")
+  line1_arg <- min(xml_line1(args[[1]]))
+  line1_paren <- xml_line1(set[[2]])
   identical(line1_arg, line1_paren)
 }
 
