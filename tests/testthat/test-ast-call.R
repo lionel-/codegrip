@@ -97,6 +97,12 @@ test_that("check_call() detects calls", {
 })
 
 test_that("can retrieve arguments of calls", {
+  expr <- parse_xml_one(parse_info(text = "foo()"))
+  expect_equal(
+    node_call_arguments(expr),
+    list()
+  )
+
   info <- parse_info(text = "foo(1, 2, 3)")
   expr <- parse_xml_one(info)
   args <- node_call_arguments(expr)
@@ -117,6 +123,12 @@ test_that("can retrieve arguments of calls", {
 })
 
 test_that("can retrieve arguments of function definitions", {
+  expr <- parse_xml_one(parse_info(text = "function() NULL"))
+  expect_equal(
+    node_call_arguments(expr),
+    list()
+  )
+
   info <- parse_info(text = "function(a, b, c) NULL")
   expr <- parse_xml_one(info)
   args <- node_call_arguments(expr)
