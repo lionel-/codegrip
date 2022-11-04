@@ -1,4 +1,11 @@
 addin_reshape <- function() {
+  tryCatch(
+    addin_reshape_unsafe(),
+    error = function(...) NULL
+  )
+}
+
+addin_reshape_unsafe <- function() {
   context <- rstudioapi::getActiveDocumentContext()
   text <- context$contents
   sel <- context$selection[[1]]$range
