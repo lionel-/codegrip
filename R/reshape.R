@@ -1,23 +1,4 @@
-addin_reshape <- function() {
-  tryCatch(
-    addin_reshape_unsafe(),
-    error = function(...) NULL
-  )
-}
-
-addin_reshape_unsafe <- function() {
-  context <- rstudioapi::getActiveDocumentContext()
-  text <- context$contents
-  sel <- context$selection[[1]]$range
-
-  # No reshaping for selections
-  if (!identical(sel$start, sel$end)) {
-    return()
-  }
-
-  line <- sel$start[[1]]
-  col <- sel$start[[2]]
-
+reshape <- function(text, line, col) {
   info <- parse_info(text = paste(text, collapse = "\n"))
   xml <- parse_xml(info)
 
@@ -49,10 +30,10 @@ addin_reshape_unsafe <- function() {
   }
 
   pos <- node_positions(call)
-  pos1 <- rstudioapi::document_position(pos$line1, pos$col1)
-  pos2 <- rstudioapi::document_position(pos$line2, pos$col2 + 1L)
-  range <- rstudioapi::document_range(pos1, pos2)
 
-  rstudioapi::modifyRange(range, reshaped)
-  rstudioapi::setCursorPosition(sel)
+  list(
+    reshaped = reshaped,
+    start = c(line = pos$line1, col = pos$col1),
+    end = c(line = pos$line2, col = pos$col2 + 1L)
+  )
 }
