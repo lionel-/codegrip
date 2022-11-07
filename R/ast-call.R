@@ -234,19 +234,21 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
     args_nodes <- args_nodes[-1]
   }
 
-  args <- map(args_nodes[-n_args], function(node) {
+  arg_text <- function(node) {
     text <- node_text(node, info = info)
 
     # Increase indentation of multiline args
-    text <- gsub("\n", paste0("\n", indent_args), text)
+    gsub("\n", paste0("\n", indent_args), text)
+  }
 
-    paste0(indent_args, text, ",\n")
+  args <- map(args_nodes[-n_args], function(node) {
+    paste0(indent_args, arg_text(node), ",\n")
   })
   args <- paste0(as.character(args), collapse = "")
 
   last <- paste0(
     indent_args,
-    node_text(args_nodes[[n_args]], info = info),
+    arg_text(args_nodes[[n_args]]),
     if (!L) "\n",
     if (!L) indent,
     ")"
@@ -274,13 +276,15 @@ node_call_wider <- function(node, ..., info) {
 
   fn <- paste0(node_text(set[[1]], info = info), left_paren_text)
 
-  args <- map(args_nodes[-n_args], function(node) {
+  arg_text <- function(node) {
     text <- node_text(node, info = info)
 
     # Decrease indentation of multiline args
-    text <- gsub("\n(  |\t)", "\n", text)
+    gsub("\n(  |\t)", "\n", text)
+  }
 
-    paste0(text, ", ")
+  args <- map(args_nodes[-n_args], function(node) {
+    paste0(arg_text(node), ", ")
   })
 
   args <- as.character(compact(args))
@@ -293,6 +297,6 @@ node_call_wider <- function(node, ..., info) {
     suffix <- ""
   }
 
-  last <- paste0(node_text(args_nodes[[n_args]], info = info), ")")
+  last <- paste0(arg_text(args_nodes[[n_args]]), ")")
   paste0(fn, args, last, suffix)
 }
