@@ -7,7 +7,7 @@ print_longer <- function(text, ...) {
 
   cat_line(
     paste0(indent, as_longer(call, ...)),
-    "\n",
+    "",
     paste0(indent, as_longer(def, ...))
   )
 }
@@ -32,7 +32,7 @@ print_wider <- function(text, ...) {
 
   cat_line(
     paste0(indent, as_wider(call, ...)),
-    "\n",
+    "",
     paste0(indent, as_wider(def, ...))
   )
 }
