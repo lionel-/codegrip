@@ -100,6 +100,7 @@
       print_longer("()")
     Output
       foofybaz()
+      
       function() NULL
     Code
       print_longer("(a)")
@@ -107,6 +108,7 @@
       foofybaz(
         a
       )
+      
       function(
           a
       ) NULL
@@ -117,6 +119,7 @@
         b,
         c
       )
+      
       function(
           b,
           c
@@ -129,6 +132,7 @@
         b,
         c
       )
+      
       function(
           a,
           b,
@@ -142,6 +146,7 @@
         b,
         c = 3
       )
+      
       function(
           a = 1,
           b,
@@ -154,6 +159,7 @@
       print_longer("  ()")
     Output
         foofybaz()
+      
         function() NULL
     Code
       print_longer("  (a)")
@@ -161,6 +167,7 @@
         foofybaz(
           a
         )
+      
         function(
             a
         ) NULL
@@ -171,6 +178,7 @@
           a,
           b
         )
+      
         function(
             a,
             b
@@ -186,6 +194,7 @@
         ),
         c
       )
+      
       function(
           a,
           b = foo(
@@ -203,6 +212,7 @@
         ),
         c
       )
+      
       function(
           a,
           b = foo(
@@ -220,6 +230,7 @@
           ),
           c
         )
+      
         function(
             a,
             b = foo(
@@ -236,6 +247,7 @@
           2,
         c
       )
+      
       function(
           a,
           b =
@@ -249,17 +261,20 @@
       print_longer_l("()")
     Output
       foofybaz()
+      
       function() NULL
     Code
       print_longer_l("(a)")
     Output
       foofybaz(a)
+      
       function(a) NULL
     Code
       print_longer_l("(a, b)")
     Output
       foofybaz(a,
                b)
+      
       function(a,
                b) NULL
     Code
@@ -268,6 +283,7 @@
       foofybaz(a,
                b,
                c)
+      
       function(a,
                b,
                c) NULL
@@ -277,6 +293,7 @@
       foofybaz(a = 1,
                b,
                c = 3)
+      
       function(a = 1,
                b,
                c = 3) NULL
@@ -287,17 +304,20 @@
       print_longer_l("  ()")
     Output
         foofybaz()
+      
         function() NULL
     Code
       print_longer_l("  (a)")
     Output
         foofybaz(a)
+      
         function(a) NULL
     Code
       print_longer_l("  (a, b)")
     Output
         foofybaz(a,
                  b)
+      
         function(a,
                  b) NULL
     Code
@@ -309,6 +329,7 @@
                bar
                ),
                c)
+      
       function(a,
                b = foo(
                bar
@@ -322,6 +343,7 @@
                  bar
                ),
                c)
+      
       function(a,
                b = foo(
                  bar
@@ -335,6 +357,7 @@
                    bar
                  ),
                  c)
+      
         function(a,
                  b = foo(
                    bar
@@ -347,6 +370,7 @@
                b =
                  2,
                c)
+      
       function(a,
                b =
                  2,
@@ -358,47 +382,56 @@
       print_wider("()")
     Output
       foofybaz()
+      
       function() NULL
     Code
       print_wider("(\n  a\n)")
     Output
       foofybaz(a)
+      
       function(a) NULL
     Code
       print_wider("(\n\n  a\n\n)")
     Output
       foofybaz(a)
+      
       function(a) NULL
     Code
       print_wider("(\n  a, \n  b\n)")
     Output
       foofybaz(a, b)
+      
       function(a, b) NULL
     Code
       print_wider("(\n  a, \n  b, \n  c\n)")
     Output
       foofybaz(a, b, c)
+      
       function(a, b, c) NULL
     Code
       print_wider("(\n  a = 1,\n  b,\n  c = 3\n)")
     Output
       foofybaz(a = 1, b, c = 3)
+      
       function(a = 1, b, c = 3) NULL
     Code
       # Leading indentation is ignored
       print_wider("  ()")
     Output
         foofybaz()
+      
         function() NULL
     Code
       print_wider("  (\n  a\n)")
     Output
         foofybaz(a)
+      
         function(a) NULL
     Code
       print_wider("  (\n\n  a\n\n,\n b)")
     Output
         foofybaz(a, b)
+      
         function(a, b) NULL
     Code
       # Multiline args are indented as is
@@ -407,6 +440,7 @@
       foofybaz(a, b = foo(
         bar
       ), c)
+      
       function(a, b = foo(
         bar
       ), c) NULL
@@ -415,6 +449,7 @@
     Output
       foofybaz(a, b =
         2, c)
+      
       function(a, b =
         2, c) NULL
 

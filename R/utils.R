@@ -9,7 +9,7 @@ is_rstudio <- function() {
 }
 
 cat_line <- function(...) {
-  cat(paste0(..., "\n", collapse = ""))
+  cat(paste0(chr(...), "\n", collapse = ""))
 }
 
 lines <- function(info, call = caller_env()) {
