@@ -7,7 +7,7 @@ reshape <- function(text, line, col) {
     return()
   }
 
-  if (node_call_is_function_def(call)) {
+  if (node_call_type(call) == "prefix") {
     reshaped <- switch(
       node_call_shape(call),
       wide = if (length(node_call_arguments(call)) == 1) {

@@ -155,6 +155,10 @@ node_list_text <- function(data, ..., info) {
 locate_node <- function(set, line, col, ..., data) {
   check_dots_empty()
 
+  if (!length(set)) {
+    return(0L)
+  }
+
   pos <- node_positions(set)
 
   start <- pos$start

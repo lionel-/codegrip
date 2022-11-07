@@ -245,11 +245,6 @@ test_that("can reshape call wider", {
   })
 })
 
-test_that("can detect function defs", {
-  expect_true(node_call_is_function_def(p("function() NULL")))
-  expect_false(node_call_is_function_def(p("if (a) NULL")))
-})
-
 test_that("can detect prefix calls", {
   expect_equal(
     node_call_type(p("function(a) NULL")),

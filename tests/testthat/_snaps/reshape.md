@@ -100,3 +100,37 @@
                c) NULL
       
 
+# reshape() cycles other call-like constructs
+
+    Code
+      code <- "if (a) NULL"
+      snap_reshape_cycle(2, code)
+    Output
+      i: 1
+      if(
+          a
+      ) NULL
+      
+      i: 2
+      if(a) NULL
+      
+    Code
+      code <- "while (a) NULL"
+      snap_reshape_cycle(2, code)
+    Output
+      i: 1
+      while(
+          a
+      ) NULL
+      
+      i: 2
+      while(a) NULL
+      
+    Code
+      code <- "for (i in x) NULL"
+      snap_reshape_cycle(1, code)
+    Output
+      i: 1
+      for (i in x) NULL
+      
+
