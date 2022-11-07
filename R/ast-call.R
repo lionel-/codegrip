@@ -199,6 +199,7 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
     suffix <- ""
   }
 
+  base_indent <- 2
   indent_n <- node_indentation(node, info = info)
   indent <- strrep(" ", indent_n)
 
@@ -211,9 +212,9 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
   } else {
     fn <- paste0(fn, left_paren_text, "\n")
     if (prefix) {
-      indent_args_n <- indent_n + 2 * 2
+      indent_args_n <- indent_n + base_indent * 2
     } else {
-      indent_args_n <- indent_n + 2
+      indent_args_n <- indent_n + base_indent
     }
     indent_args <- strrep(" ", indent_args_n)
   }
