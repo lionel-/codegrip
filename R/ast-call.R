@@ -193,7 +193,7 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
   }
 
   if (prefix) {
-    body <- node_text(set[[length(set)]], info = info)
+    body <- node_text(node_call_body(node), info = info)
     suffix <- paste0(" ", body)
   } else {
     suffix <- ""
@@ -286,7 +286,7 @@ node_call_wider <- function(node, ..., info) {
   args <- paste0(args, collapse = "")
 
   if (node_call_type(node) == "prefix") {
-    body <- node_text(set[[length(set)]], info = info)
+    body <- node_text(node_call_body(node), info = info)
     suffix <- paste0(" ", body)
   } else {
     suffix <- ""

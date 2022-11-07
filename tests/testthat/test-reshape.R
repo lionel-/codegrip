@@ -27,6 +27,9 @@ test_that("reshape() cycles other call-like constructs", {
     code <- "if (a) NULL"
     snap_reshape_cycle(2, code)
 
+    code <- "if (a) b else c"
+    snap_reshape_cycle(2, code)
+
     code <- "while (a) NULL"
     snap_reshape_cycle(2, code)
 

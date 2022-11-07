@@ -115,6 +115,18 @@
       if (a) NULL
       
     Code
+      code <- "if (a) b else c"
+      snap_reshape_cycle(2, code)
+    Output
+      i: 1
+      if (
+          a
+      ) b else c
+      
+      i: 2
+      if (a) b else c
+      
+    Code
       code <- "while (a) NULL"
       snap_reshape_cycle(2, code)
     Output
