@@ -82,6 +82,16 @@ node_call_fn <- function(node) {
   xml_name(set[[1]])
 }
 
+node_call_needs_space_before_paren <- function(node) {
+  need_space_fns <- c(
+    "IF",
+    "FOR",
+    "WHILE"
+  )
+
+  node_call_fn(node) %in% need_space_fns
+}
+
 node_call_shape <- function(node) {
   check_call(node)
 
@@ -152,6 +162,12 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
 
   prefix <- node_call_type(node) == "prefix"
 
+  if (node_call_needs_space_before_paren(node)) {
+    left_paren_text <- " ("
+  } else {
+    left_paren_text <- "("
+  }
+
   if (prefix) {
     body <- node_text(set[[length(set)]], info = info)
     suffix <- paste0(" ", body)
@@ -165,11 +181,11 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
   fn <- node_text(set[[1]], info = info)
 
   if (L) {
-    fn <- paste0(fn, "(")
+    fn <- paste0(fn, left_paren_text)
     left_paren <- node_call_parens(node)[[1]]
     indent_args <- strrep(" ", xml_col2(left_paren))
   } else {
-    fn <- paste0(fn, "(\n")
+    fn <- paste0(fn, left_paren_text, "\n")
     if (prefix) {
       indent_args_n <- indent_n + 2 * 2
     } else {
@@ -225,7 +241,13 @@ node_call_wider <- function(node, ..., info) {
     return(node_text(node, info = info))
   }
 
-  fn <- paste0(node_text(set[[1]], info = info), "(")
+  if (node_call_needs_space_before_paren(node)) {
+    left_paren_text <- " ("
+  } else {
+    left_paren_text <- "("
+  }
+
+  fn <- paste0(node_text(set[[1]], info = info), left_paren_text)
 
   args <- map(args_nodes[-n_args], function(node) {
     text <- node_text(node, info = info)

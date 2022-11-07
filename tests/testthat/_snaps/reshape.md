@@ -107,24 +107,24 @@
       snap_reshape_cycle(2, code)
     Output
       i: 1
-      if(
+      if (
           a
       ) NULL
       
       i: 2
-      if(a) NULL
+      if (a) NULL
       
     Code
       code <- "while (a) NULL"
       snap_reshape_cycle(2, code)
     Output
       i: 1
-      while(
+      while (
           a
       ) NULL
       
       i: 2
-      while(a) NULL
+      while (a) NULL
       
     Code
       code <- "for (i in x) NULL"
