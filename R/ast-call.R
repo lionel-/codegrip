@@ -49,13 +49,20 @@ node_call_arguments <- function(node) {
   check_call(node)
   set <- node_children(node)
 
+  right_paren <- match("OP-RIGHT-PAREN", xml_name(set))
+  if (!right_paren) {
+    abort("Can't find right paren.", .internal = TRUE)
+  }
+
   # Remove prefix call (function, while, etc) body
-  if (node_call_type(node) == "prefix") {
-    set <- set[-length(set)]
+  n <- length(set)
+  if (right_paren < n) {
+    set <- set[-seq(right_paren + 1, n)]
+    n <- right_paren
   }
 
   # Remove function node and parentheses
-  set <- set[-c(1:2, length(set))]
+  set <- set[-c(1:2, n)]
 
   # Split on comma
   split_sep(set, xml_name(set) == "OP-COMMA")

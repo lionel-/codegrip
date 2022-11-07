@@ -157,6 +157,22 @@ test_that("can retrieve arguments of function definitions", {
   )
 })
 
+test_that("can retrieve argument of if calls", {
+  info <- parse_info(text = "if (a) b")
+  node <- parse_xml_one(info)
+  expect_equal(
+    map(node_call_arguments(node), node_text, info = info),
+    list("a")
+  )
+
+  info <- parse_info(text = "if (a) b else c")
+  node <- parse_xml_one(info)
+  expect_equal(
+    map(node_call_arguments(node), node_text, info = info),
+    list("a")
+  )
+})
+
 test_that("can detect call type", {
   expect_call_shape("()", "wide")
   expect_call_shape("(a)", "wide")
