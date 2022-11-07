@@ -14,12 +14,16 @@ cat_line <- function(...) {
 
 lines <- function(info, call = caller_env()) {
   if (!is_null(info$text)) {
-    strsplit(info$text, "\n")[[1]]
+    as_lines(info$text)
   } else if (nzchar(info$file)) {
     readLines(info$file)
   } else {
     abort("Must supply either `text` or `file`.", call = call)
   }
+}
+
+as_lines <- function(text) {
+  strsplit(text, "\n")[[1]]
 }
 
 split_sep <- function(x, is_sep) {
@@ -36,4 +40,12 @@ str_replace <- function(text, start, stop = nchar(text), value = "") {
     value,
     substr(text, stop + 1L, nchar(text))
   )
+}
+
+line_reindent <- function(line, n) {
+  sub("^[[:space:]]*", spaces(n), line)
+}
+
+spaces <- function(n) {
+  strrep(" ", n)
 }

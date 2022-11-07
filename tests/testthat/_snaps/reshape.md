@@ -146,3 +146,98 @@
       for (i in x) NULL
       
 
+# can reshape braced expressions
+
+    Code
+      code <- "expect_snapshot({\n  a\n  b\n})"
+      snap_reshape_cycle(2, code)
+    Output
+      i: 1
+      expect_snapshot(
+        {
+          a
+          b
+        }
+      )
+      
+      i: 2
+      expect_snapshot({
+        a
+        b
+      })
+      
+    Code
+      code <- "{\n  expect_snapshot({\n    a\n    b\n  })\n}"
+      snap_reshape_cycle(2, code, line = 2, col = 3)
+    Output
+      i: 1
+      expect_snapshot(
+          {
+            a
+            b
+          }
+        )
+      
+      i: 2
+      expect_snapshot({
+          a
+          b
+        })
+      
+    Code
+      code <- "test_that('desc', {\n  a\n  b\n})"
+      snap_reshape_cycle(3, code)
+    Output
+      i: 1
+      test_that(
+        'desc',
+        {
+          a
+          b
+        }
+      )
+      
+      i: 2
+      test_that('desc', {
+        a
+        b
+      })
+      
+      i: 3
+      test_that(
+        'desc',
+        {
+          a
+          b
+        }
+      )
+      
+    Code
+      code <- "test_that({\n  a\n  b\n}, desc = 'desc')"
+      snap_reshape_cycle(3, code)
+    Output
+      i: 1
+      test_that(
+        {
+          a
+          b
+        },
+        desc = 'desc'
+      )
+      
+      i: 2
+      test_that({
+        a
+        b
+      }, desc = 'desc')
+      
+      i: 3
+      test_that(
+        {
+          a
+          b
+        },
+        desc = 'desc'
+      )
+      
+

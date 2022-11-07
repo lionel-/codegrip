@@ -37,3 +37,37 @@ test_that("reshape() cycles other call-like constructs", {
     snap_reshape_cycle(1, code)
   })
 })
+
+test_that("can reshape braced expressions", {
+  expect_snapshot({
+    code <-
+"expect_snapshot({
+  a
+  b
+})"
+    snap_reshape_cycle(2, code)
+
+    code <-
+"{
+  expect_snapshot({
+    a
+    b
+  })
+}"
+    snap_reshape_cycle(2, code, line = 2, col = 3)
+
+    code <-
+"test_that('desc', {
+  a
+  b
+})"
+    snap_reshape_cycle(3, code)
+
+    code <-
+"test_that({
+  a
+  b
+}, desc = 'desc')"
+    snap_reshape_cycle(3, code)
+  })
+})

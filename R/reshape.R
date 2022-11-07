@@ -51,7 +51,7 @@ reshape <- function(text, line, col, to = NULL) {
 
 reshape_update <- function(text, line, col, to = NULL) {
   out <- reshape(text, line, col, to = to)
-  lines <- strsplit(text, "\n")[[1]]
+  lines <- as_lines(text)
 
   start_line <- out$start[["line"]]
   start_col <- out$start[["col"]]

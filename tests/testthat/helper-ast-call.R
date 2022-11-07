@@ -1,4 +1,4 @@
-print_longer <- function(text, ...) {
+print_longer <- function(text, ..., orig = FALSE) {
   call <- sub_call_shape(text)
   def <- sub_def_shape(text)
 
@@ -6,13 +6,14 @@ print_longer <- function(text, ...) {
   indent <- strrep(" ", indent)
 
   cat_line(
+    if (orig) cat_line(c(call, "")),
     paste0(indent, as_longer(call, ...)),
     "",
     paste0(indent, as_longer(def, ...))
   )
 }
 print_longer_l <- function(text, ...) {
-  print_longer(text, L = TRUE)
+  print_longer(text, L = TRUE, ...)
 }
 as_longer <- function(text, ...) {
   info <- parse_info(text = text)
