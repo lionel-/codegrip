@@ -246,6 +246,27 @@ test_that("can reshape call wider", {
 })
 
 test_that("can detect function defs", {
-  def <- parse_xml_one(parse_info(text = "function() NULL"))
-  expect_true(node_call_is_function_def(def))
+  expect_true(node_call_is_function_def(p("function() NULL")))
+  expect_false(node_call_is_function_def(p("if (a) NULL")))
+})
+
+test_that("can detect prefix calls", {
+  expect_equal(
+    node_call_type(p("function(a) NULL")),
+    "prefix"
+  )
+  expect_equal(
+    node_call_type(p("if (a) NULL")),
+    "prefix"
+  )
+  expect_equal(
+    node_call_type(p("while (a) NULL")),
+    "prefix"
+  )
+
+  # `for` calls are not ordinary parenthesised expressions
+  expect_error(
+    node_call_type(p("for (x in i) NULL")),
+    "must be a function call node"
+  )
 })

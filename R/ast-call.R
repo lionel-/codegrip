@@ -65,6 +65,30 @@ node_call_arguments <- function(node) {
   split_sep(set, xml_name(set) == "OP-COMMA")
 }
 
+node_call_type <- function(node) {
+  prefix_fns <- c(
+    "FUNCTION",
+    "IF",
+    "FOR",
+    "WHILE"
+  )
+
+  if (node_call_fn(node) %in% prefix_fns) {
+    "prefix"
+  } else {
+    "bare"
+  }
+}
+
+node_call_fn <- function(node) {
+  check_call(node)
+  xml_name(xml_children(node)[[1]])
+}
+
+node_call_is_function_def <- function(node) {
+  node_call_fn(node) == "FUNCTION"
+}
+
 node_call_shape <- function(node) {
   check_call(node)
 
@@ -120,17 +144,6 @@ node_call_parens <- function(node) {
   }
 
   list(left = left, right = right)
-}
-
-node_call_is_function_def <- function(node) {
-  check_call(node)
-
-  set <- xml_children(node)
-  if (length(set) <= 3) {
-    return(FALSE)
-  }
-
-  identical(xml_name(set[[1]]), "FUNCTION")
 }
 
 node_call_longer <- function(node, ..., L = FALSE, info) {
