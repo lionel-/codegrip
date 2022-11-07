@@ -173,6 +173,43 @@ test_that("can retrieve argument of if calls", {
   )
 })
 
+test_that("can retrieve body of prefix calls", {
+  expect_null(node_call_body(p("foo()")))
+
+  info <- parse_info(text = "function(a) b")
+  node <- parse_xml_one(info)
+  expect_equal(
+    map(node_call_body(node), node_text, info = info),
+    list("b")
+  )
+
+  info <- parse_info(text = "while (a) b")
+  node <- parse_xml_one(info)
+  expect_equal(
+    map(node_call_body(node), node_text, info = info),
+    list("b")
+  )
+
+  info <- parse_info(text = "if (a) b")
+  node <- parse_xml_one(info)
+  expect_equal(
+    map(node_call_body(node), node_text, info = info),
+    list("b")
+  )
+
+  info <- parse_info(text = "if (a) b else c")
+  node <- parse_xml_one(info)
+  expect_equal(
+    map(node_call_body(node), node_text, info = info),
+    list("b", "else", "c")
+  )
+
+  expect_error(
+    node_call_body(p("for (i in x) b")),
+    "must be a function call node"
+  )
+})
+
 test_that("can detect call type", {
   expect_call_shape("()", "wide")
   expect_call_shape("(a)", "wide")

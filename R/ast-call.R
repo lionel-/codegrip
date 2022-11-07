@@ -68,6 +68,23 @@ node_call_arguments <- function(node) {
   split_sep(set, xml_name(set) == "OP-COMMA")
 }
 
+node_call_body <- function(node) {
+  check_call(node)
+  set <- node_children(node)
+
+  right_paren <- match("OP-RIGHT-PAREN", xml_name(set))
+  if (!right_paren) {
+    abort("Can't find right paren.", .internal = TRUE)
+  }
+
+  n <- length(set)
+  if (right_paren == n) {
+    NULL
+  } else {
+    set[seq(right_paren + 1, n)]
+  }
+}
+
 node_call_type <- function(node) {
   prefix_fns <- c(
     "FUNCTION",
