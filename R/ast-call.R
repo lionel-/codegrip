@@ -46,15 +46,11 @@ node_is_call <- function(node) {
 }
 
 node_call_arguments <- function(node) {
-  if (inherits(node, "xml_nodeset")) {
-    set <- node
-  } else {
-    set <- xml_children(node)
-  }
-  check_call(set)
+  check_call(node)
+  set <- node_children(node)
 
-  # Remove function def body
-  if (xml_name(set[[1]]) == "FUNCTION") {
+  # Remove prefix call (function, while, etc) body
+  if (node_call_type(node) == "prefix") {
     set <- set[-length(set)]
   }
 
@@ -82,7 +78,8 @@ node_call_type <- function(node) {
 
 node_call_fn <- function(node) {
   check_call(node)
-  xml_name(xml_children(node)[[1]])
+  set <- node_children(node)
+  xml_name(set[[1]])
 }
 
 node_call_is_function_def <- function(node) {

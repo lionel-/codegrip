@@ -115,6 +115,14 @@ merge_positions <- function(pos) {
   )
 }
 
+node_children <- function(data) {
+  if (inherits(data, "xml_nodeset")) {
+    data
+  } else {
+    xml_children(data)
+  }
+}
+
 node_text <- function(data, ..., info) {
   check_dots_empty()
 
