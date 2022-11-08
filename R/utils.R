@@ -29,3 +29,11 @@ split_sep <- function(x, is_sep) {
   groups <- cumsum(is_sep)[!is_sep]
   unname(split(x[!is_sep], groups))
 }
+
+str_replace <- function(text, start, stop = nchar(text), value = "") {
+  paste0(
+    substr(text, 1, start - 1L),
+    value,
+    substr(text, stop + 1L, nchar(text))
+  )
+}
