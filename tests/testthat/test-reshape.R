@@ -69,5 +69,12 @@ test_that("can reshape braced expressions", {
   b
 }, desc = 'desc')"
     snap_reshape_cycle(3, code)
+
+    "String arguments are correctly indented"
+    code <- "foo({\n  'baz'\n  'foofy'\n})"
+    snap_reshape_cycle(3, code)
+
+    code <- "foo('desc', 'bar', {\n  'baz'\n  'foofy'\n})"
+    snap_reshape_cycle(3, code)
   })
 })

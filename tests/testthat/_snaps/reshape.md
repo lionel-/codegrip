@@ -240,4 +240,61 @@
         desc = 'desc'
       )
       
+    Code
+      # String arguments are correctly indented
+      code <- "foo({\n  'baz'\n  'foofy'\n})"
+      snap_reshape_cycle(3, code)
+    Output
+      i: 1
+      foo(
+        {
+          'baz'
+          'foofy'
+        }
+      )
+      
+      i: 2
+      foo({
+        'baz'
+        'foofy'
+      })
+      
+      i: 3
+      foo(
+        {
+          'baz'
+          'foofy'
+        }
+      )
+      
+    Code
+      code <- "foo('desc', 'bar', {\n  'baz'\n  'foofy'\n})"
+      snap_reshape_cycle(3, code)
+    Output
+      i: 1
+      foo(
+        'desc',
+        'bar',
+        {
+          'baz'
+          'foofy'
+        }
+      )
+      
+      i: 2
+      foo('desc', 'bar', {
+        'baz'
+        'foofy'
+      })
+      
+      i: 3
+      foo(
+        'desc',
+        'bar',
+        {
+          'baz'
+          'foofy'
+        }
+      )
+      
 
