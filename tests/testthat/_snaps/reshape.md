@@ -240,8 +240,34 @@
         desc = 'desc'
       )
       
+
+# can reshape with multiple braced expressions
+
     Code
-      # String arguments are correctly indented
+      code <- "foo({\n  1\n}, {\n  2\n})"
+      snap_reshape_cycle(2, code)
+    Output
+      i: 1
+      foo(
+        {
+          1
+        },
+        {
+          2
+        }
+      )
+      
+      i: 2
+      foo({
+        1
+      }, {
+        2
+      })
+      
+
+# String arguments are correctly indented
+
+    Code
       code <- "foo({\n  'baz'\n  'foofy'\n})"
       snap_reshape_cycle(3, code)
     Output
@@ -298,27 +324,24 @@
       )
       
 
-# can reshape with multiple braced expressions
+# lines within strings are not indented
 
     Code
-      code <- "foo({\n  1\n}, {\n  2\n})"
+      code <- "foo('{\n  1\n  2\n}')"
       snap_reshape_cycle(2, code)
     Output
       i: 1
       foo(
-        {
-          1
-        },
-        {
-          2
-        }
+        '{
+        1
+        2
+      }'
       )
       
       i: 2
-      foo({
+      foo('{
         1
-      }, {
         2
-      })
+      }')
       
 

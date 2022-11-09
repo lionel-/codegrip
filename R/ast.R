@@ -185,7 +185,9 @@ indent_adjust <- function(lines, indent, skip = -1) {
     node <- nodes[[loc]]
 
     # Do not adjust indentation of lines inside strings
-    if (xml_name(node) == "STR_CONST" && col != xml_col1(node)) {
+    if (xml_name(node) == "STR_CONST" &&
+        (col != xml_col1(node) ||
+         i != xml_line1(node))) {
       next
     }
 

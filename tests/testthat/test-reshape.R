@@ -69,13 +69,6 @@ test_that("can reshape braced expressions", {
   b
 }, desc = 'desc')"
     snap_reshape_cycle(3, code)
-
-    "String arguments are correctly indented"
-    code <- "foo({\n  'baz'\n  'foofy'\n})"
-    snap_reshape_cycle(3, code)
-
-    code <- "foo('desc', 'bar', {\n  'baz'\n  'foofy'\n})"
-    snap_reshape_cycle(3, code)
   })
 })
 
@@ -111,4 +104,25 @@ test_that("empty lines are not indented when reshaped", {
     reshape(1, 2, text = code),
     exp
   )
+})
+
+test_that("String arguments are correctly indented", {
+  expect_snapshot({
+    code <- "foo({\n  'baz'\n  'foofy'\n})"
+    snap_reshape_cycle(3, code)
+
+    code <- "foo('desc', 'bar', {\n  'baz'\n  'foofy'\n})"
+    snap_reshape_cycle(3, code)
+  })
+})
+
+test_that("lines within strings are not indented", {
+  expect_snapshot({
+    code <-
+"foo('{
+  1
+  2
+}')"
+    snap_reshape_cycle(2, code)
+  })
 })
