@@ -190,7 +190,7 @@ check_node <- function(node,
 }
 
 check_node_set <- function(set,
-                           arg = caller_arg(node),
+                           arg = caller_arg(set),
                            call = caller_env()) {
   if (!inherits(set, "xml_nodeset")) {
     abort(

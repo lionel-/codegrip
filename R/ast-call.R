@@ -31,7 +31,7 @@ check_call <- function(node,
 }
 
 node_is_call <- function(node) {
-  check_node_or_nodeset(node, arg = arg, call = call)
+  check_node_or_nodeset(node)
 
   if (inherits(node, "xml_node")) {
     set <- xml_children(node)
