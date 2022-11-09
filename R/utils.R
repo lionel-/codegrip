@@ -49,3 +49,10 @@ line_reindent <- function(line, n) {
 spaces <- function(n) {
   strrep(" ", n)
 }
+
+replace_tabs <- function(text) {
+  # FIXME: Hardcoded indent level
+  base_indent <- 2
+
+  gsub("\t", strrep(" ", base_indent), text)
+}
