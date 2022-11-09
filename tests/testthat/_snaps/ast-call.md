@@ -185,24 +185,6 @@
         ) NULL
     Code
       # Multiline args are indented as is
-      print_longer("(a, b = foo(\nbar\n), c)")
-    Output
-      foofybaz(
-        a,
-        b = foo(
-        bar
-        ),
-        c
-      )
-      
-      function(
-          a,
-          b = foo(
-          bar
-          ),
-          c
-      ) NULL
-    Code
       print_longer("(a, b = foo(\n  bar\n), c)")
     Output
       foofybaz(
@@ -221,24 +203,6 @@
           c
       ) NULL
     Code
-      print_longer("  (a, b = foo(\n  bar\n), c)")
-    Output
-        foofybaz(
-          a,
-          b = foo(
-            bar
-          ),
-          c
-        )
-      
-        function(
-            a,
-            b = foo(
-              bar
-            ),
-            c
-        ) NULL
-    Code
       print_longer("(a, b =\n  2, c)")
     Output
       foofybaz(
@@ -254,6 +218,61 @@
             2,
           c
       ) NULL
+    Code
+      print_longer("  (a, b = foo(\n    bar  \n  ), c)")
+    Output
+        foofybaz(
+          a,
+          b = foo(
+            bar  
+          ),
+          c
+        )
+      
+        function(
+            a,
+            b = foo(
+              bar  
+            ),
+            c
+        ) NULL
+    Code
+      # Wrong indentation is preserved
+      print_longer("(a, b = foo(\nbar\n), c)")
+    Output
+      foofybaz(
+        a,
+        b = foo(
+        bar
+        ),
+        c
+      )
+      
+      function(
+          a,
+          b = foo(
+          bar
+          ),
+          c
+      ) NULL
+    Code
+      print_longer("  (a, b = foo(\n  bar\n), c)")
+    Output
+        foofybaz(
+          a,
+          b = foo(
+          bar
+        ),
+          c
+        )
+      
+        function(
+            a,
+            b = foo(
+            bar
+          ),
+            c
+        ) NULL
 
 # can reshape call longer (L shape)
 
@@ -322,20 +341,6 @@
                  b) NULL
     Code
       # Multiline args are indented as is
-      print_longer_l("(a, b = foo(\nbar\n), c)")
-    Output
-      foofybaz(a,
-               b = foo(
-               bar
-               ),
-               c)
-      
-      function(a,
-               b = foo(
-               bar
-               ),
-               c) NULL
-    Code
       print_longer_l("(a, b = foo(\n  bar\n), c)")
     Output
       foofybaz(a,
@@ -350,20 +355,6 @@
                ),
                c) NULL
     Code
-      print_longer_l("  (a, b = foo(\n  bar\n), c)")
-    Output
-        foofybaz(a,
-                 b = foo(
-                   bar
-                 ),
-                 c)
-      
-        function(a,
-                 b = foo(
-                   bar
-                 ),
-                 c) NULL
-    Code
       print_longer_l("(a, b =\n  2, c)")
     Output
       foofybaz(a,
@@ -375,6 +366,49 @@
                b =
                  2,
                c) NULL
+    Code
+      print_longer_l("  (a, b = foo(\n    bar  \n  ), c)")
+    Output
+        foofybaz(a,
+                 b = foo(
+                   bar  
+                 ),
+                 c)
+      
+        function(a,
+                 b = foo(
+                   bar  
+                 ),
+                 c) NULL
+    Code
+      # Wrong indentation is preserved
+      print_longer_l("(a, b = foo(\nbar\n), c)")
+    Output
+      foofybaz(a,
+               b = foo(
+               bar
+               ),
+               c)
+      
+      function(a,
+               b = foo(
+               bar
+               ),
+               c) NULL
+    Code
+      print_longer_l("  (a, b = foo(\n  bar\n), c)")
+    Output
+        foofybaz(a,
+                 b = foo(
+                 bar
+               ),
+                 c)
+      
+        function(a,
+                 b = foo(
+                 bar
+               ),
+                 c) NULL
 
 # can reshape call wider
 

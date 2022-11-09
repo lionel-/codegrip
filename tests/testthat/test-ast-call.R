@@ -248,10 +248,13 @@ test_that("can reshape call longer", {
     print_longer("  (a, b)")
 
     "Multiline args are indented as is"
-    print_longer("(a, b = foo(\nbar\n), c)")
     print_longer("(a, b = foo(\n  bar\n), c)")
-    print_longer("  (a, b = foo(\n  bar\n), c)")
     print_longer("(a, b =\n  2, c)")
+    print_longer("  (a, b = foo(\n    bar  \n  ), c)")
+
+    "Wrong indentation is preserved"
+    print_longer("(a, b = foo(\nbar\n), c)")
+    print_longer("  (a, b = foo(\n  bar\n), c)")
   })
 })
 
@@ -271,10 +274,13 @@ test_that("can reshape call longer (L shape)", {
     print_longer_l("  (a, b)")
 
     "Multiline args are indented as is"
-    print_longer_l("(a, b = foo(\nbar\n), c)")
     print_longer_l("(a, b = foo(\n  bar\n), c)")
-    print_longer_l("  (a, b = foo(\n  bar\n), c)")
     print_longer_l("(a, b =\n  2, c)")
+    print_longer_l("  (a, b = foo(\n    bar  \n  ), c)")
+
+    "Wrong indentation is preserved"
+    print_longer_l("(a, b = foo(\nbar\n), c)")
+    print_longer_l("  (a, b = foo(\n  bar\n), c)")
   })
 })
 

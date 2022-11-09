@@ -175,10 +175,12 @@ node_call_parens <- function(node) {
 
 node_call_longer <- function(node, ..., L = FALSE, info) {
   check_call(node)
+  base_indent <- 2
 
   set <- xml_children(node)
   args_nodes <- node_call_arguments(set)
   n_args <- length(args_nodes)
+  current_indent_n <- node_indentation(node, info = info)
 
   if (!n_args) {
     return(node_text(node, info = info))
@@ -195,27 +197,25 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
   if (prefix) {
     body <- node_text(node_call_body(node), info = info)
     suffix <- paste0(" ", body)
+    indent_factor <- 2
   } else {
     suffix <- ""
+    indent_factor <- 1
   }
 
-  indent_n <- node_indentation(node, info = info)
-  indent <- strrep(" ", indent_n)
-
   fn <- node_text(set[[1]], info = info)
+  left_paren <- node_call_parens(node)[[1]]
 
   if (L) {
     fn <- paste0(fn, left_paren_text)
-    left_paren <- node_call_parens(node)[[1]]
-    indent_args <- strrep(" ", xml_col2(left_paren))
+    new_indent_n <- xml_col2(left_paren)
   } else {
     fn <- paste0(fn, left_paren_text, "\n")
     if (prefix) {
-      indent_args_n <- indent_n + 2 * 2
+      new_indent_n <- current_indent_n + base_indent * indent_factor
     } else {
-      indent_args_n <- indent_n + 2
+      new_indent_n <- current_indent_n + base_indent
     }
-    indent_args <- strrep(" ", indent_args_n)
   }
 
   if (L) {
@@ -233,21 +233,36 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
     args_nodes <- args_nodes[-1]
   }
 
+  arg_text <- function(arg) {
+    lines <- node_text_lines(arg, info = info)
+    lines[[1]] <- line_reindent(lines[[1]], new_indent_n)
+
+    if (xml_line1(arg)[[1]] == xml_line1(left_paren)) {
+      arg_parent_indent_n <- 0L
+    } else {
+      arg_parent_indent_n <- xml_col1(arg)[[1L]] + 1L
+    }
+
+    if (L) {
+      arg_indent_n <- new_indent_n - current_indent_n - arg_parent_indent_n
+    } else {
+      arg_indent_n <- base_indent * indent_factor - arg_parent_indent_n
+    }
+
+    lines <- indent_adjust(lines, arg_indent_n, skip = 1)
+
+    paste0(lines, collapse = "\n")
+  }
+
   args <- map(args_nodes[-n_args], function(node) {
-    text <- node_text(node, info = info)
-
-    # Increase indentation of multiline args
-    text <- gsub("\n", paste0("\n", indent_args), text)
-
-    paste0(indent_args, text, ",\n")
+    paste0(arg_text(node), ",\n")
   })
   args <- paste0(as.character(args), collapse = "")
 
   last <- paste0(
-    indent_args,
-    node_text(args_nodes[[n_args]], info = info),
+    arg_text(args_nodes[[n_args]]),
     if (!L) "\n",
-    if (!L) indent,
+    if (!L) spaces(current_indent_n),
     ")"
   )
 
@@ -273,13 +288,17 @@ node_call_wider <- function(node, ..., info) {
 
   fn <- paste0(node_text(set[[1]], info = info), left_paren_text)
 
+  base_indent <- 2
+  arg_text <- function(node) {
+    lines <- indent_adjust(
+      node_text_lines(node, info = info),
+      -base_indent
+    )
+    paste0(lines, collapse = "\n")
+  }
+
   args <- map(args_nodes[-n_args], function(node) {
-    text <- node_text(node, info = info)
-
-    # Decrease indentation of multiline args
-    text <- gsub("\n(  |\t)", "\n", text)
-
-    paste0(text, ", ")
+    paste0(arg_text(node), ", ")
   })
 
   args <- as.character(compact(args))
@@ -292,6 +311,6 @@ node_call_wider <- function(node, ..., info) {
     suffix <- ""
   }
 
-  last <- paste0(node_text(args_nodes[[n_args]], info = info), ")")
+  last <- paste0(arg_text(args_nodes[[n_args]]), ")")
   paste0(fn, args, last, suffix)
 }
