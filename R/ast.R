@@ -1,22 +1,25 @@
 parse_xml <- function(info) {
   check_info(info)
 
-  ast <- parse(info$file, text = info$text, keep.source = TRUE)
+  ast <- parse(info$file, text = info$lines, keep.source = TRUE)
   data <- utils::getParseData(ast)
 
   xml_text <- xmlparsedata::xml_parse_data(data)
   read_xml(xml_text)
 }
 
-parse_info <- function(file = "", text = NULL) {
+parse_info <- function(file = "", text = NULL, lines = NULL) {
+  if (!is_null(text)) {
+    lines <- as_lines(text)
+  }
   list(
     file = file,
-    text = text
+    lines = lines
   )
 }
 
 is_info <- function(x) {
-  is.list(x) && all(c("file", "text") %in% names(x))
+  is.list(x) && all(c("file", "lines") %in% names(x))
 }
 check_info <- function(info,
                        arg = caller_arg(info),
@@ -159,7 +162,7 @@ indent_adjust <- function(lines, indent, skip = -1) {
     return(lines)
   }
 
-  data <- parse_xml(parse_info(text = lines))
+  data <- parse_xml(parse_info(lines = lines))
   nodes <- xml_find_all(data, "//*")
 
   for (i in seq_along(lines)) {

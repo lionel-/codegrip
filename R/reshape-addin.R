@@ -7,7 +7,7 @@ addin_reshape <- function() {
 
 addin_reshape_unsafe <- function() {
   context <- rstudioapi::getActiveDocumentContext()
-  text <- context$contents
+  lines <- context$contents
   sel <- context$selection[[1]]$range
 
   # No reshaping for selections
@@ -18,7 +18,8 @@ addin_reshape_unsafe <- function() {
   line <- sel$start[[1]]
   col <- sel$start[[2]]
 
-  out <- reshape_info(line, col, text = text)
+  parse_info <- parse_info(lines = lines)
+  out <- reshape_info(line, col, info = parse_info)
 
   pos1 <- rstudioapi::document_position(out$start[["line"]], out$start[["col"]])
   pos2 <- rstudioapi::document_position(out$end[["line"]], out$end[["col"]])

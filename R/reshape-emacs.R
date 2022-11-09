@@ -10,7 +10,8 @@ emacs_reshape <- function(...) {
 }
 
 emacs_reshape_unsafe <- function(file, line, col) {
-  out <- reshape_info(line, col, file = file)
+  parse_info <- parse_info(file = file)
+  out <- reshape_info(line, col, info = parse_info)
 
   writeLines(character(), file)
   print_lisp(out, file)

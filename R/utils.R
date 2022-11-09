@@ -13,8 +13,8 @@ cat_line <- function(...) {
 }
 
 lines <- function(info, call = caller_env()) {
-  if (!is_null(info$text)) {
-    as_lines(info$text)
+  if (!is_null(info$lines)) {
+    info$lines
   } else if (nzchar(info$file)) {
     readLines(info$file)
   } else {

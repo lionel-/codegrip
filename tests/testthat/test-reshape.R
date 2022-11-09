@@ -101,7 +101,7 @@ test_that("empty lines are not indented when reshaped", {
 )"
 
   expect_equal(
-    reshape(1, 2, text = code),
+    reshape(1, 2, info = parse_info(text = code)),
     exp
   )
 })
