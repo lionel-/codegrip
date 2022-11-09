@@ -169,6 +169,11 @@ indent_adjust <- function(lines, indent, skip = -1) {
 
     line <- replace_tabs(lines[[i]])
 
+    # Don't indent empty lines with parasite whitespace
+    if (!nzchar(line)) {
+      next
+    }
+
     col <- regexpr("[^[:space:]]", line)
     col <- if (col < 0) 1L else col
 

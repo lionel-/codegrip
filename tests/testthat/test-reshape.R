@@ -89,3 +89,26 @@ test_that("can reshape with multiple braced expressions", {
     snap_reshape_cycle(2, code)
   })
 })
+
+test_that("empty lines are not indented when reshaped", {
+  code <-
+"foo({
+  1
+
+  2
+})"
+
+  exp <-
+"foo(
+  {
+    1
+
+    2
+  }
+)"
+
+  expect_equal(
+    reshape(1, 2, text = code),
+    exp
+  )
+})
