@@ -18,7 +18,7 @@ addin_reshape_unsafe <- function() {
   line <- sel$start[[1]]
   col <- sel$start[[2]]
 
-  out <- reshape(text, line, col)
+  out <- reshape_info(text, line, col)
 
   pos1 <- rstudioapi::document_position(out$start[["line"]], out$start[["col"]])
   pos2 <- rstudioapi::document_position(out$end[["line"]], out$end[["col"]])
