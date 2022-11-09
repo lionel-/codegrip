@@ -1,5 +1,5 @@
-reshape_info <- function(text, line, col, to = NULL) {
-  info <- parse_info(text = paste(text, collapse = "\n"))
+reshape_info <- function(line, col, text = NULL, file = "", to = NULL) {
+  info <- parse_info(file = file, text = text)
   xml <- parse_xml(info)
 
   call <- find_function_call(line, col, data = xml)
@@ -49,9 +49,14 @@ reshape_info <- function(text, line, col, to = NULL) {
   )
 }
 
-reshape <- function(text, line, col, to = NULL) {
-  out <- reshape_info(text, line, col, to = to)
-  lines <- as_lines(text)
+reshape <- function(line, col, text = NULL, file = "", to = NULL) {
+  out <- reshape_info(line, col, text = text, file = file, to = to)
+
+  if (nzchar(file)) {
+    lines <- readLines(file)
+  } else {
+    lines <- as_lines(text)
+  }
 
   start_line <- out$start[["line"]]
   start_col <- out$start[["col"]]
