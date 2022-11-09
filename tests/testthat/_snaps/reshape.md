@@ -298,3 +298,27 @@
       )
       
 
+# can reshape with multiple braced expressions
+
+    Code
+      code <- "foo({\n  1\n}, {\n  2\n})"
+      snap_reshape_cycle(2, code)
+    Output
+      i: 1
+      foo(
+        {
+          1
+        },
+        {
+          2
+        }
+      )
+      
+      i: 2
+      foo({
+        1
+      }, {
+        2
+      })
+      
+

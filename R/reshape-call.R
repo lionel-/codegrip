@@ -104,7 +104,10 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
     lines <- node_text_lines(arg, info = info)
     lines[[1]] <- line_reindent(lines[[1]], new_indent_n)
 
-    if (xml_line1(arg)[[1]] == xml_line1(left_paren)) {
+    arg_line_n <- xml_line1(arg)[[1]]
+    sep_line_ns <- xml_line1(node_call_separators(node))
+
+    if (any(arg_line_n == sep_line_ns)) {
       arg_parent_indent_n <- 0L
     } else {
       arg_parent_indent_n <- xml_col1(arg)[[1L]] + 1L

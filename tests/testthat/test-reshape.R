@@ -78,3 +78,14 @@ test_that("can reshape braced expressions", {
     snap_reshape_cycle(3, code)
   })
 })
+
+test_that("can reshape with multiple braced expressions", {
+  expect_snapshot({
+    code <- "foo({
+  1
+}, {
+  2
+})"
+    snap_reshape_cycle(2, code)
+  })
+})

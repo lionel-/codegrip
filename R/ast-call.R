@@ -131,3 +131,7 @@ node_call_parens <- function(node) {
   list(left = left, right = right)
 }
 
+node_call_separators <- function(node) {
+  set <- xml_children(node)
+  set[xml_name(set) %in% c("OP-LEFT-PAREN", "OP-COMMA")]
+}
