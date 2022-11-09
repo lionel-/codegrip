@@ -1,7 +1,9 @@
 parse_xml <- function(info) {
   check_info(info)
 
-  data <- utils::getParseData(parse(info$file, text = info$text))
+  ast <- parse(info$file, text = info$text, keep.source = TRUE)
+  data <- utils::getParseData(ast)
+
   xml_text <- xmlparsedata::xml_parse_data(data)
   read_xml(xml_text)
 }
