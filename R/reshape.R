@@ -1,3 +1,36 @@
+find_reshape_node <- function(node, line, col) {
+  pos <- data.frame(line = line, col = col)
+
+  while (!is.na(node)) {
+    set <- xml_children(node)
+
+    can_reshape <- can_reshape(set)
+    if (any(can_reshape)) {
+      first_loc <- which(can_reshape)[[1]]
+      first <- set[[first_loc]]
+
+      first_pos <- data.frame(
+        line = xml_line1(first),
+        col = xml_col1(first)
+      )
+
+      if (vctrs::vec_compare(pos, first_pos) >= 0) {
+        return(first)
+      }
+    }
+
+    node <- node_parent(node)
+  }
+
+  node
+}
+
+can_reshape <- function(data) {
+  xml_name(data) %in% c(
+    "OP-LEFT-PAREN"
+  )
+}
+
 reshape_info <- function(line, col, ..., info, to = NULL) {
   xml <- parse_xml(info)
 

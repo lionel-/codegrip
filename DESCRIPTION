@@ -10,6 +10,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Imports: 
     rlang,
+    vctrs,
     xml2,
     xmlparsedata
 Suggests: 

@@ -120,6 +120,21 @@ merge_positions <- function(pos) {
   )
 }
 
+node_at_position <- function(line, col, ..., data) {
+  all <- xml_find_all(data, "//*")
+  loc <- locate_node(all, line, col, data = data)
+
+  if (loc) {
+    all[[loc]]
+  } else {
+    NULL
+  }
+}
+
+node_parent <- function(node) {
+  xml_find_first(node, "./parent::*")
+}
+
 node_children <- function(data) {
   if (inherits(data, "xml_nodeset")) {
     data

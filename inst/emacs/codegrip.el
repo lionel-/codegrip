@@ -32,6 +32,20 @@
         (insert reshaped)
         (goto-char point)))))
 
+;;;###autoload
+(defun codegrip-rise ()
+  (interactive)
+  (inferior-ess-r-force)
+  (codegrip--update-scratch)
+  (let ((cmd (format "codegrip:::emacs_rise(%d, %d, file = '%s')\n"
+                     (line-number-at-pos)
+                     (1+ (current-column))
+                     (codegrip--scratch-file))))
+    (when (ess-boolean-command cmd)
+      (let* ((out (read (codegrip--scratch-buffer-string)))
+             (pos (codegrip--as-position out)))
+        (goto-char pos)))))
+
 (defun codegrip--update-scratch ()
   (let ((buf (current-buffer)))
     (with-current-buffer (codegrip--scratch-buffer)
