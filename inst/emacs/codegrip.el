@@ -35,9 +35,13 @@
 ;;;###autoload
 (defun codegrip-rise ()
   (interactive)
+  (codegrip--move "codegrip:::emacs_rise(%d, %d, file = '%s')\n"))
+
+(defun codegrip--move (cmd)
+  (interactive)
   (inferior-ess-r-force)
   (codegrip--update-scratch)
-  (let ((cmd (format "codegrip:::emacs_rise(%d, %d, file = '%s')\n"
+  (let ((cmd (format cmd
                      (line-number-at-pos)
                      (1+ (current-column))
                      (codegrip--scratch-file))))
