@@ -253,6 +253,17 @@ check_node_or_nodeset <- function(node,
   }
 }
 
+tree_prefix <- function(node) {
+  nodes <- xml_find_all(node, "//*")
+  loc <- detect_index(nodes, function(x) identical(x, node))
+
+  if (loc) {
+    nodes[seq(1, loc)]
+  } else {
+    nodes[0]
+  }
+}
+
 tree_suffix <- function(node) {
   nodes <- xml_find_all(node, "//*")
   loc <- detect_index(nodes, function(x) identical(x, node))

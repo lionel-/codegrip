@@ -42,6 +42,11 @@
   (interactive)
   (codegrip--move "codegrip:::emacs_move('walk', %d, %d, file = '%s')\n"))
 
+;;;###autoload
+(defun codegrip-back ()
+  (interactive)
+  (codegrip--move "codegrip:::emacs_move('back', %d, %d, file = '%s')\n"))
+
 (defun codegrip--move (cmd)
   (interactive)
   (inferior-ess-r-force)

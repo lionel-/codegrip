@@ -3,6 +3,7 @@ emacs_move <- function(cmd, ...) {
     cmd,
     rise = rise_info,
     walk = walk_info,
+    back = back_info,
     function(...) FALSE
   )
   tryCatch(
