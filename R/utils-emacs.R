@@ -5,7 +5,16 @@ print_lisp <- function(x, file = stdout(), last = FALSE) {
     NULL
   }
 
-  cat("(")
+  finish <- function(x = NULL) {
+    if (!is_null(x)) {
+      cat(x)
+    }
+    if (!last) {
+      cat("\n")
+    }
+
+    invisible(NULL)
+  }
 
   supported <- c(
     "list",
@@ -23,8 +32,10 @@ print_lisp <- function(x, file = stdout(), last = FALSE) {
 
   switch(
     type,
-    NULL = return(cat("nil"))
+    NULL = return(finish("nil"))
   )
+
+  cat("(")
 
   nms <- names(x)
   n <- length(x)
@@ -48,10 +59,5 @@ print_lisp <- function(x, file = stdout(), last = FALSE) {
     }
   }
 
-  cat(")")
-  if (!last) {
-    cat("\n")
-  }
-
-  invisible(NULL)
+  finish(")")
 }
