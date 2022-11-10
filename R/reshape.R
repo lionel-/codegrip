@@ -27,7 +27,8 @@ find_reshape_node <- function(node, line, col) {
 
 can_reshape <- function(data) {
   xml_name(data) %in% c(
-    "OP-LEFT-PAREN"
+    "OP-LEFT-PAREN",
+    "OP-LEFT-BRACE"
   )
 }
 

@@ -1,10 +1,10 @@
 test_that("can rise outwards", {
   code <-
-"foo((
+"foo({
   bar(
     point(4, 5)
   )
-))
+})
 "
 
   info <- parse_info(text = code)
@@ -31,11 +31,11 @@ test_that("can rise outwards", {
 
 test_that("can walk forward and backward", {
   code <-
-"foo((
+"foo({
   bar(
     point(1, 1)
   )
-))
+})
 "
   info <- parse_info(text = code)
 
