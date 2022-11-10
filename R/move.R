@@ -20,3 +20,29 @@ rise_info <- function(line, col, ..., info) {
     )
   }
 }
+
+walk_info <- function(line, col, ..., info) {
+  xml <- parse_xml(info)
+
+  current_node <- node_at_position(line, col, data = xml)
+  if (is_null(current_node)) {
+    return(NULL)
+  }
+
+  in_order <- keep(tree_suffix(current_node), is_terminal)
+
+  if (can_reshape(current_node)) {
+    in_order <- in_order[-1]
+  }
+
+  can_reshape <- which(can_reshape(in_order))
+  if (!length(can_reshape)) {
+    return(NULL)
+  }
+
+  out <- in_order[[can_reshape[[1]]]]
+  c(
+    line = xml_line1(out),
+    col = xml_col1(out)
+  )
+}

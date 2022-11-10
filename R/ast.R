@@ -131,6 +131,20 @@ node_at_position <- function(line, col, ..., data) {
   }
 }
 
+is_terminal <- function(data) {
+  !xml_name(data) %in% c(
+    "expr",
+    "exprlist",
+    "expr_or_help",
+    "expr_or_assign_or_help",
+    "formlist",
+    "sublist",
+    "cond",
+    "ifcond",
+    "forcond"
+  )
+}
+
 node_parent <- function(node) {
   xml_find_first(node, "./parent::*")
 }
@@ -236,5 +250,16 @@ check_node_or_nodeset <- function(node,
       call = call,
       arg = arg
     )
+  }
+}
+
+tree_suffix <- function(node) {
+  nodes <- xml_find_all(node, "//*")
+  loc <- detect_index(nodes, function(x) identical(x, node))
+
+  if (loc) {
+    nodes[seq(loc, length(nodes))]
+  } else {
+    nodes[0]
   }
 }

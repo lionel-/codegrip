@@ -35,7 +35,12 @@
 ;;;###autoload
 (defun codegrip-rise ()
   (interactive)
-  (codegrip--move "codegrip:::emacs_rise(%d, %d, file = '%s')\n"))
+  (codegrip--move "codegrip:::emacs_move('rise', %d, %d, file = '%s')\n"))
+
+;;;###autoload
+(defun codegrip-walk ()
+  (interactive)
+  (codegrip--move "codegrip:::emacs_move('walk', %d, %d, file = '%s')\n"))
 
 (defun codegrip--move (cmd)
   (interactive)

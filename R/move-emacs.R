@@ -1,13 +1,19 @@
-emacs_rise <- function(...) {
+emacs_move <- function(cmd, ...) {
+  action <- switch(
+    cmd,
+    rise = rise_info,
+    walk = walk_info,
+    function(...) FALSE
+  )
   tryCatch(
-    emacs_rise_unsafe(...),
+    emacs_move_unsafe(action, ...),
     error = function(cnd) FALSE
   )
 }
 
-emacs_rise_unsafe <- function(file, line, col) {
+emacs_move_unsafe <- function(action_info, file, line, col) {
   parse_info <- parse_info(file = file)
-  out <- rise_info(line, col, info = parse_info)
+  out <- action_info(line, col, info = parse_info)
 
   writeLines(character(), file)
   print_lisp(out, file)
