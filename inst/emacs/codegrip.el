@@ -33,10 +33,9 @@
         (goto-char point)))))
 
 (defun codegrip--update-scratch ()
-  (let ((text (buffer-substring-no-properties (point-min) (point-max))))
+  (let ((buf (current-buffer)))
     (with-current-buffer (codegrip--scratch-buffer)
-      (delete-region (point-min) (point-max))
-      (insert text)
+      (replace-buffer-contents buf)
       (basic-save-buffer)
       (kill-buffer))))
 
