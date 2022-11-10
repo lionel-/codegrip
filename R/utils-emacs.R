@@ -1,5 +1,5 @@
 # Bare bones printer for limited use cases
-print_lisp <- function(x, file, last = FALSE) {
+print_lisp <- function(x, file = stdout(), last = FALSE) {
   cat <- function(...) {
     base::cat(..., file = file, append = TRUE)
     NULL
