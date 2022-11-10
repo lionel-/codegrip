@@ -126,3 +126,19 @@ test_that("lines within strings are not indented", {
     snap_reshape_cycle(2, code)
   })
 })
+
+test_that("can reshape calls with comments", {
+  expect_snapshot({
+    code <-
+"foo(
+  x,
+  y # comment
+)"
+    snap_reshape_cycle(2, code)
+
+    code <-
+"foo(x, y # comment
+)"
+    snap_reshape_cycle(2, code)
+  })
+})

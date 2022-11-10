@@ -149,6 +149,9 @@ node_call_wider <- function(node, ..., info) {
   if (!n_args) {
     return(node_text(node, info = info))
   }
+  if (any(xml_name(set) == "COMMENT")) {
+    return(node_text(node, info = info))
+  }
 
   if (node_call_needs_space_before_paren(node)) {
     left_paren_text <- " ("

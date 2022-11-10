@@ -345,3 +345,38 @@
       }')
       
 
+# can reshape calls with comments
+
+    Code
+      code <- "foo(\n  x,\n  y # comment\n)"
+      snap_reshape_cycle(2, code)
+    Output
+      i: 1
+      foo(
+        x,
+        y # comment
+      )
+      
+      i: 2
+      foo(
+        x,
+        y # comment
+      )
+      
+    Code
+      code <- "foo(x, y # comment\n)"
+      snap_reshape_cycle(2, code)
+    Output
+      i: 1
+      foo(
+        x,
+        y # comment
+      )
+      
+      i: 2
+      foo(
+        x,
+        y # comment
+      )
+      
+
