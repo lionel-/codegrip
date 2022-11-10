@@ -142,3 +142,10 @@ test_that("can reshape calls with comments", {
     snap_reshape_cycle(2, code)
   })
 })
+
+test_that("can reshape calls with empty arguments", {
+  expect_snapshot({
+    code <- "foo(x, , , y, z, )"
+    snap_reshape_cycle(2, code)
+  })
+})

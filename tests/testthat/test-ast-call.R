@@ -230,3 +230,20 @@ test_that("can detect prefix calls", {
     "must be a function call node"
   )
 })
+
+test_that("node_call_arguments() supports empty arguments", {
+  node <- p("foo(x = x, , y, z, )")
+  children <- xml_children(node)
+  empty <- children[0]
+
+  expect_equal(
+    node_call_arguments(node),
+    list(
+      children[3:5],
+      empty,
+      children[8],
+      children[10],
+      empty
+    )
+  )
+})

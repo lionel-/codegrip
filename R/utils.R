@@ -26,12 +26,29 @@ as_lines <- function(text) {
   strsplit(text, "\n")[[1]]
 }
 
-split_sep <- function(x, is_sep) {
+split_sep <- function(xs, is_sep) {
   stopifnot(
     is_logical(is_sep)
   )
-  groups <- cumsum(is_sep)[!is_sep]
-  unname(split(x[!is_sep], groups))
+
+  n <- sum(is_sep) + 1L
+  out <- rep(list(xs[0]), n)
+
+  j <- 1L
+  locs <- integer()
+
+  for (i in seq_along(xs)) {
+    if (is_sep[[i]]) {
+      out[[j]] <- xs[locs]
+      locs <- integer()
+      j <- j + 1L
+    } else {
+      locs <- c(locs, i)
+    }
+  }
+  out[[j]] <- xs[locs]
+
+  out
 }
 
 str_replace <- function(text, start, stop = nchar(text), value = "") {

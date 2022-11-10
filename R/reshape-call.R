@@ -31,7 +31,11 @@ node_call_shape <- function(node) {
   }
 
   paren_col1 <- xml_col1(left_paren)
-  arg_col1 <- min(xml_col1(args[[2]]))
+
+  # Can't look into `args` because we need to deal with empty args.
+  # Just look for node following first comma, which might also be a comma.
+  first_comma <- which(xml_name(set) == "OP-COMMA")[[1]]
+  arg_col1 <- min(xml_col1(set[[first_comma + 1L]]))
 
   if (identical(paren_col1, arg_col1 - 1L)) {
     "L"
@@ -101,16 +105,21 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
   }
 
   arg_text <- function(arg) {
-    lines <- node_text_lines(arg, info = info)
-    lines[[1]] <- line_reindent(lines[[1]], new_indent_n)
-
-    arg_line_n <- xml_line1(arg)[[1]]
     sep_line_ns <- xml_line1(node_call_separators(node))
 
-    if (any(arg_line_n == sep_line_ns)) {
-      arg_parent_indent_n <- 0L
+    if (length(arg)) {
+      lines <- node_text_lines(arg, info = info)
+      lines[[1]] <- line_reindent(lines[[1]], new_indent_n)
+
+      arg_line_n <- xml_line1(arg)[[1]]
+      if (any(arg_line_n == sep_line_ns)) {
+        arg_parent_indent_n <- 0L
+      } else {
+        arg_parent_indent_n <- xml_col1(arg)[[1L]] + 1L
+      }
     } else {
-      arg_parent_indent_n <- xml_col1(arg)[[1L]] + 1L
+      lines <- ""
+      arg_parent_indent_n <- 0L
     }
 
     if (L) {
@@ -119,7 +128,11 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
       arg_indent_n <- base_indent * indent_factor - arg_parent_indent_n
     }
 
-    lines <- indent_adjust(lines, arg_indent_n, skip = 1)
+    if (length(arg)) {
+      lines <- indent_adjust(lines, arg_indent_n, skip = 1)
+    } else {
+      lines <- spaces(arg_indent_n)
+    }
 
     paste0(lines, collapse = "\n")
   }
@@ -163,11 +176,13 @@ node_call_wider <- function(node, ..., info) {
 
   base_indent <- 2
   arg_text <- function(node) {
-    lines <- indent_adjust(
-      node_text_lines(node, info = info),
-      -base_indent
-    )
-    paste0(lines, collapse = "\n")
+    if (length(node)) {
+      text <- node_text_lines(node, info = info)
+      lines <- indent_adjust(text, -base_indent)
+      paste0(lines, collapse = "\n")
+    } else {
+      ""
+    }
   }
 
   args <- map(args_nodes[-n_args], function(node) {

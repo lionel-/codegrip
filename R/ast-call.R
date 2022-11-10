@@ -64,8 +64,12 @@ node_call_arguments <- function(node) {
   # Remove function node and parentheses
   set <- set[-c(1:2, n)]
 
-  # Split on comma
-  split_sep(set, xml_name(set) == "OP-COMMA")
+  if (length(set)) {
+    # Split on comma
+    split_sep(set, xml_name(set) == "OP-COMMA")
+  } else {
+    list()
+  }
 }
 
 node_call_body <- function(node) {

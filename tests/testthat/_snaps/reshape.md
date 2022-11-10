@@ -380,3 +380,23 @@
       )
       
 
+# can reshape calls with empty arguments
+
+    Code
+      code <- "foo(x, , , y, z, )"
+      snap_reshape_cycle(2, code)
+    Output
+      i: 1
+      foo(
+        x,
+        ,
+        ,
+        y,
+        z,
+        
+      )
+      
+      i: 2
+      foo(x, , , y, z, )
+      
+
