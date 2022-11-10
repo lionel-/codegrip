@@ -52,4 +52,6 @@ print_lisp <- function(x, file, last = FALSE) {
   if (!last) {
     cat("\n")
   }
+
+  invisible(NULL)
 }
