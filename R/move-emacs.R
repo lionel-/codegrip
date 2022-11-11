@@ -1,9 +1,9 @@
 emacs_move <- function(cmd, ...) {
   action <- switch(
     cmd,
-    rise = rise_info,
-    walk = walk_info,
-    back = back_info,
+    up = move_up_info,
+    right = move_right_info,
+    left = move_left_info,
     function(...) FALSE
   )
   tryCatch(

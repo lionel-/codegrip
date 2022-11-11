@@ -1,19 +1,19 @@
-Name: Move Forwards to Reshape Anchor
-Description: Move to next reshape anchor.
-Binding: addin_move_walk
+Name: Move Right
+Description: Move to next expression.
+Binding: addin_move_right
 Interactive: false
 
-Name: Move Backwards to Reshape Anchor
-Description: Move to previous reshape anchor.
-Binding: addin_move_back
+Name: Move Left
+Description: Move to previous expression.
+Binding: addin_move_left
 Interactive: false
 
-Name: Move Upwards to Reshape Anchor
-Description: Move to containing reshape anchor.
-Binding: addin_move_rise
+Name: Move Up
+Description: Move to containing expression.
+Binding: addin_move_up
 Interactive: false
 
-Name: Reshape Calls
-Description: Reshape calls longer or wider.
+Name: Reshape Expression
+Description: Reshape expressions longer or wider.
 Binding: addin_reshape
 Interactive: false

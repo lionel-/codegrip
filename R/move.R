@@ -1,4 +1,4 @@
-rise_info <- function(line, col, ..., info) {
+move_up_info <- function(line, col, ..., info) {
   xml <- parse_xml(info)
 
   node <- node_at_position(line, col, data = xml)
@@ -21,7 +21,7 @@ rise_info <- function(line, col, ..., info) {
   }
 }
 
-walk_info <- function(line, col, ..., info) {
+move_right_info <- function(line, col, ..., info) {
   xml <- parse_xml(info)
 
   current_node <- node_at_position(line, col, data = xml)
@@ -47,7 +47,7 @@ walk_info <- function(line, col, ..., info) {
   )
 }
 
-back_info <- function(line, col, ..., info) {
+move_left_info <- function(line, col, ..., info) {
   xml <- parse_xml(info)
 
   current_node <- node_at_position(line, col, data = xml)
