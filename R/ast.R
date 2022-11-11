@@ -132,21 +132,27 @@ node_at_position <- function(line, col, ..., data) {
 }
 
 is_terminal <- function(data) {
-  !xml_name(data) %in% c(
-    "expr",
-    "exprlist",
-    "expr_or_help",
-    "expr_or_assign_or_help",
-    "formlist",
-    "sublist",
-    "cond",
-    "ifcond",
-    "forcond"
-  )
+  !xml_name(data) %in% terminal_node_names
 }
 
+non_terminal_node_names <- c(
+  "expr",
+  "exprlist",
+  "expr_or_help",
+  "expr_or_assign_or_help",
+  "formlist",
+  "sublist",
+  "cond",
+  "ifcond",
+  "forcond"
+)
+
 node_parent <- function(node) {
-  xml_find_first(node, "./parent::*")
+  if (is.na(node)) {
+    node
+  } else {
+    xml_find_first(node, "./parent::*")
+  }
 }
 
 node_children <- function(data) {

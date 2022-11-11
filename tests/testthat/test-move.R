@@ -14,18 +14,18 @@ test_that("can move up", {
   )
   expect_equal(
     move_up_info(3, 5, info = info),
-    c(line = 2, col = 6)
+    c(line = 2, col = 3)
   )
   expect_equal(
-    move_up_info(2, 6, info = info),
+    move_up_info(2, 3, info = info),
     c(line = 1, col = 5)
   )
   expect_equal(
     move_up_info(1, 5, info = info),
-    c(line = 1, col = 4)
+    c(line = 1, col = 1)
   )
   expect_null(
-    move_up_info(1, 4, info = info)
+    move_up_info(1, 1, info = info)
   )
 })
 

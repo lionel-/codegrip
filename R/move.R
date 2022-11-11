@@ -11,6 +11,10 @@ move_up_info <- function(line, col, ..., info) {
 
   node <- find_reshape_node(node, line, col)
 
+  if (is_terminal(node) && !is.na(parent <- node_parent(node))) {
+    node <- parent
+  }
+
   if (is.na(node)) {
     NULL
   } else {
