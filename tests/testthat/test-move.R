@@ -57,6 +57,15 @@ test_that("can move inside and outside", {
   expect_null(inject(move_outside_info(!!!a, info = info)))
 })
 
+test_that("can move inside parens", {
+  code <- "(a)(b)(c())"
+  info <- parse_info(text = code)
+
+  out <- map(1:11, function(col) move_inside_info(1, col, info = info)[[2]])
+  exp <- list(2, NULL, NULL, 5, NULL, NULL, 8, 10, 10, NULL, NULL)
+  expect_equal(out, exp)
+})
+
 test_that("can't move inside binary ops", {
   info <- parse_info(text = "foo + bar()")
   expect_null(move_outside_info(1, 1, info = info))

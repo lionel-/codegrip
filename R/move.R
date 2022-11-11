@@ -34,7 +34,10 @@ move_inside_info <- function(line, col, ..., info) {
     node <- node_parent(node)
   } else {
     # First parent: `expr` node. Second parent: `call` node.
-    node <- node_parent(node_parent(node))
+    parent <- node_parent(node)
+    if (!any(is_delimiter(xml_children(parent)))) {
+      node <- node_parent(parent)
+    }
   }
 
   set <- xml_children(node)
