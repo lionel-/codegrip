@@ -38,6 +38,11 @@
   (codegrip--move "codegrip:::emacs_move('up', %d, %d, file = '%s')\n"))
 
 ;;;###autoload
+(defun codegrip-move-down ()
+  (interactive)
+  (codegrip--move "codegrip:::emacs_move('down', %d, %d, file = '%s')\n"))
+
+;;;###autoload
 (defun codegrip-move-right ()
   (interactive)
   (codegrip--move "codegrip:::emacs_move('right', %d, %d, file = '%s')\n"))

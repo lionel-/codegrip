@@ -8,9 +8,14 @@ Description: Move to previous expression.
 Binding: addin_move_left
 Interactive: false
 
-Name: Move Up
+Name: Move Outside
 Description: Move to containing expression.
 Binding: addin_move_up
+Interactive: false
+
+Name: Move Inside
+Description: Move inside expression.
+Binding: addin_move_down
 Interactive: false
 
 Name: Reshape Expression

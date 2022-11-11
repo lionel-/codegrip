@@ -10,10 +10,7 @@ move_up_info <- function(line, col, ..., info) {
   col <- col - 1L
 
   node <- find_reshape_node(node, line, col)
-
-  if (is_terminal(node) && !is.na(parent <- node_parent(node))) {
-    node <- parent
-  }
+  node <- node_non_terminal_parent(node)
 
   if (is.na(node)) {
     NULL
@@ -23,6 +20,42 @@ move_up_info <- function(line, col, ..., info) {
       col = xml_col1(node)
     )
   }
+}
+
+move_down_info <- function(line, col, ..., info) {
+  xml <- parse_xml(info)
+
+  node <- node_at_position(line, col, data = xml)
+  if (is_null(node)) {
+    return(NULL)
+  }
+
+  if (is_delimiter(node)) {
+    node <- node_parent(node)
+  } else {
+    # First parent: `expr` node. Second parent: `call` node.
+    node <- node_parent(node_parent(node))
+  }
+
+  set <- xml_children(node)
+  loc <- detect_index(set, is_delimiter)
+
+  if (!loc || length(set) == loc) {
+    return(NULL)
+  }
+
+  down <- set[[loc + 1]]
+  down_line <- xml_line1(down)
+  down_col <- xml_col1(down)
+
+  if (line == down_line && col == down_col) {
+    return(NULL)
+  }
+
+  c(
+    line = down_line,
+    col = down_col
+  )
 }
 
 move_right_info <- function(line, col, ..., info) {

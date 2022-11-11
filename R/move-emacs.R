@@ -2,6 +2,7 @@ emacs_move <- function(cmd, ...) {
   action <- switch(
     cmd,
     up = move_up_info,
+    down = move_down_info,
     right = move_right_info,
     left = move_left_info,
     function(...) FALSE

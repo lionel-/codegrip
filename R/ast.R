@@ -131,10 +131,22 @@ node_at_position <- function(line, col, ..., data) {
   }
 }
 
-is_terminal <- function(data) {
-  !xml_name(data) %in% terminal_node_names
+is_delimiter <- function(data) {
+  xml_name(data) %in% delimiter_node_names
 }
 
+delimiter_node_names <- c(
+  "OP-LEFT-PAREN",
+  "OP-LEFT-BRACE",
+  "OP-LEFT-BRACKET",
+  "LBB"
+)
+
+is_terminal <- function(data) {
+  !xml_name(data) %in% non_terminal_node_names
+}
+
+# LBB is technically non-terminal
 non_terminal_node_names <- c(
   "expr",
   "exprlist",
@@ -146,6 +158,14 @@ non_terminal_node_names <- c(
   "ifcond",
   "forcond"
 )
+
+node_non_terminal_parent <- function(node) {
+  if (is_terminal(node) && !is.na(parent <- node_parent(node))) {
+    parent
+  } else {
+    node
+  }
+}
 
 node_parent <- function(node) {
   if (is.na(node)) {
