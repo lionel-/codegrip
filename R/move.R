@@ -30,7 +30,7 @@ move_inside_info <- function(line, col, ..., info) {
     return(NULL)
   }
 
-  if (is_delimiter(node)) {
+  if (is_delimiter(node) || is_prefix_fn(node)) {
     node <- node_parent(node)
   } else {
     # First parent: `expr` node. Second parent: `call` node.

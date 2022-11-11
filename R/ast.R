@@ -134,12 +134,21 @@ node_at_position <- function(line, col, ..., data) {
 is_delimiter <- function(data) {
   xml_name(data) %in% delimiter_node_names
 }
-
 delimiter_node_names <- c(
   "OP-LEFT-PAREN",
   "OP-LEFT-BRACE",
   "OP-LEFT-BRACKET",
   "LBB"
+)
+
+is_prefix_fn <- function(data) {
+  xml_name(data) %in% prefix_fn_node_names
+}
+prefix_fn_node_names <- c(
+  "FUNCTION",
+  "IF",
+  "FOR",
+  "WHILE"
 )
 
 is_terminal <- function(data) {

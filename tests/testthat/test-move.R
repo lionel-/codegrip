@@ -66,6 +66,19 @@ test_that("can move inside parens", {
   expect_equal(out, exp)
 })
 
+test_that("can move inside prefix fn", {
+  info <- parse_info(text =  "function() {}")
+  expect_equal(
+    move_inside_info(1, 1, info = info),
+    c(line = 1, col = 10)
+  )
+  info <- parse_info(text =  "if (a) {}")
+  expect_equal(
+    move_inside_info(1, 1, info = info),
+    c(line = 1, col = 5)
+  )
+})
+
 test_that("can't move inside binary ops", {
   info <- parse_info(text = "foo + bar()")
   expect_null(move_outside_info(1, 1, info = info))

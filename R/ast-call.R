@@ -90,14 +90,7 @@ node_call_body <- function(node) {
 }
 
 node_call_type <- function(node) {
-  prefix_fns <- c(
-    "FUNCTION",
-    "IF",
-    "FOR",
-    "WHILE"
-  )
-
-  if (node_call_fn(node) %in% prefix_fns) {
+  if (node_call_fn(node) %in% prefix_fn_node_names) {
     "prefix"
   } else {
     "bare"
