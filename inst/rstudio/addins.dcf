@@ -1,21 +1,21 @@
 Name: Move Right
 Description: Move to next expression.
-Binding: addin_move_right
+Binding: addin_move_next
 Interactive: false
 
 Name: Move Left
 Description: Move to previous expression.
-Binding: addin_move_left
+Binding: addin_move_previous
 Interactive: false
 
 Name: Move Outside
 Description: Move to containing expression.
-Binding: addin_move_up
+Binding: addin_move_outside
 Interactive: false
 
 Name: Move Inside
 Description: Move inside expression.
-Binding: addin_move_down
+Binding: addin_move_inside
 Interactive: false
 
 Name: Reshape Expression

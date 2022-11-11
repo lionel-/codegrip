@@ -1,10 +1,10 @@
 emacs_move <- function(cmd, ...) {
   action <- switch(
     cmd,
-    up = move_up_info,
-    down = move_down_info,
-    right = move_right_info,
-    left = move_left_info,
+    "outside" = move_outside_info,
+    "inside" = move_inside_info,
+    "next" = move_next_info,
+    "previous" = move_previous_info,
     function(...) FALSE
   )
   tryCatch(

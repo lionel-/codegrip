@@ -1,11 +1,11 @@
-addin_move_up <- function() {
-  addin_move(move_up_info)
+addin_move_outside <- function() {
+  addin_move(move_outside_info)
 }
-addin_move_right <- function() {
-  addin_move(move_right_info)
+addin_move_next <- function() {
+  addin_move(move_next_info)
 }
-addin_move_left <- function() {
-  addin_move(move_left_info)
+addin_move_previous <- function() {
+  addin_move(move_previous_info)
 }
 
 addin_move <- function(action) {

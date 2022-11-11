@@ -33,24 +33,24 @@
         (goto-char point)))))
 
 ;;;###autoload
-(defun codegrip-move-up ()
+(defun codegrip-move-outside ()
   (interactive)
-  (codegrip--move "codegrip:::emacs_move('up', %d, %d, file = '%s')\n"))
+  (codegrip--move "codegrip:::emacs_move('outside', %d, %d, file = '%s')\n"))
 
 ;;;###autoload
-(defun codegrip-move-down ()
+(defun codegrip-move-inside ()
   (interactive)
-  (codegrip--move "codegrip:::emacs_move('down', %d, %d, file = '%s')\n"))
+  (codegrip--move "codegrip:::emacs_move('inside', %d, %d, file = '%s')\n"))
 
 ;;;###autoload
-(defun codegrip-move-right ()
+(defun codegrip-move-next ()
   (interactive)
-  (codegrip--move "codegrip:::emacs_move('right', %d, %d, file = '%s')\n"))
+  (codegrip--move "codegrip:::emacs_move('next', %d, %d, file = '%s')\n"))
 
 ;;;###autoload
-(defun codegrip-move-left ()
+(defun codegrip-move-previous ()
   (interactive)
-  (codegrip--move "codegrip:::emacs_move('left', %d, %d, file = '%s')\n"))
+  (codegrip--move "codegrip:::emacs_move('previous', %d, %d, file = '%s')\n"))
 
 (defun codegrip--move (cmd)
   (interactive)
