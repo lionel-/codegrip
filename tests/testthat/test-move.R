@@ -57,6 +57,11 @@ test_that("can move inside and outside", {
   expect_null(inject(move_outside_info(!!!a, info = info)))
 })
 
+test_that("can't move inside binary ops", {
+  info <- parse_info(text = "foo + bar()")
+  expect_null(move_outside_info(1, 1, info = info))
+})
+
 test_that("can move to next and previous", {
   code <-
 "foo({
