@@ -97,6 +97,25 @@ node_positions <- function(data) {
   )
 }
 
+df_pos <- function(line, col) {
+  data.frame(
+    line = line,
+    col = col
+  )
+}
+as_df_pos <- function(data) {
+  df_pos(
+    line = xml_line1(data),
+    col = xml_col1(data)
+  )
+}
+as_df_pos2 <- function(data) {
+  df_pos(
+    line = xml_line2(data),
+    col = xml_col2(data)
+  )
+}
+
 merge_positions <- function(pos) {
   line1 <- min(pos$line1)
   line2 <- max(pos$line2)

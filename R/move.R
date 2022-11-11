@@ -30,6 +30,10 @@ move_inside_info <- function(line, col, ..., info) {
     return(NULL)
   }
 
+  if (vctrs::vec_compare(df_pos(line, col), as_df_pos(node)) > 0) {
+    return(NULL)
+  }
+
   if (is_delimiter(node) || is_prefix_fn(node)) {
     node <- node_parent(node)
   } else {

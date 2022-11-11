@@ -1,5 +1,5 @@
 find_reshape_node <- function(node, line, col) {
-  pos <- data.frame(line = line, col = col)
+  pos <- df_pos(line, col)
 
   while (!is.na(node)) {
     set <- xml_children(node)
@@ -8,11 +8,7 @@ find_reshape_node <- function(node, line, col) {
     if (any(can_reshape)) {
       first_loc <- which(can_reshape)[[1]]
       first <- set[[first_loc]]
-
-      first_pos <- data.frame(
-        line = xml_line1(first),
-        col = xml_col1(first)
-      )
+      first_pos <- as_df_pos(first)
 
       if (vctrs::vec_compare(pos, first_pos) >= 0) {
         return(first)

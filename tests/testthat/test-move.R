@@ -112,3 +112,23 @@ test_that("can move to next and previous", {
   expect_null(inject(move_previous_info(!!!b, info = info)))
   expect_null(inject(move_previous_info(!!!a, info = info)))
 })
+
+test_that("moving inside with cursor on whitespace", {
+  info <- parse_info(text = "  foo()")
+  expect_null(move_inside_info(1, 1, info = info))
+
+  code <-
+"{
+  foo()
+}"
+  info <- parse_info(text = code)
+  expect_null(move_inside_info(2, 1, info = info))
+
+  code <-
+"function() {
+  bar()
+  foo()
+}"
+  info <- parse_info(text = code)
+  expect_null(move_inside_info(3, 1, info = info))
+})
