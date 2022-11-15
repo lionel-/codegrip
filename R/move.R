@@ -34,18 +34,18 @@ move_inside_info <- function(line, col, ..., info) {
     return(NULL)
   }
 
-  if (is_delimiter(node) || is_prefix_fn(node)) {
+  if (is_delim_open(node) || is_prefix_fn(node)) {
     node <- node_parent(node)
   } else {
     # First parent: `expr` node. Second parent: `call` node.
     parent <- node_parent(node)
-    if (!any(is_delimiter(xml_children(parent)))) {
+    if (!any(is_delim_open(xml_children(parent)))) {
       node <- node_parent(parent)
     }
   }
 
   set <- xml_children(node)
-  loc <- detect_index(set, is_delimiter)
+  loc <- detect_index(set, is_delim_open)
 
   if (!loc || length(set) == loc) {
     return(NULL)

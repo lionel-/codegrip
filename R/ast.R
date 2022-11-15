@@ -150,10 +150,10 @@ node_at_position <- function(line, col, ..., data) {
   }
 }
 
-is_delimiter <- function(data) {
-  xml_name(data) %in% delimiter_node_names
+is_delim_open <- function(data) {
+  xml_name(data) %in% delim_open_node_names
 }
-delimiter_node_names <- c(
+delim_open_node_names <- c(
   "OP-LEFT-PAREN",
   "OP-LEFT-BRACE",
   "OP-LEFT-BRACKET",

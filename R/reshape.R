@@ -22,7 +22,7 @@ find_reshape_node <- function(node, line, col) {
 }
 
 can_reshape <- function(data) {
-  is_delimiter(data)
+  is_delim_open(data)
 }
 
 reshape_info <- function(line, col, ..., info, to = NULL) {
