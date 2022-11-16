@@ -136,6 +136,18 @@
 </div>
 </div>
 <div class="section level2">
+<h2 id="todo">TODO<a class="anchor" aria-label="anchor" href="#todo"></a>
+</h2>
+<ul>
+<li><p>Forward and backward motions.</p></li>
+<li><p>Adding arguments to a function call using forward backward motions.</p></li>
+<li><p>Reshaping of repeated calls like <code>foo(...)(...)</code>. This will help reshaping data.table pipelines, e.g. <code>DT[...][...]</code>.</p></li>
+<li><p>Reshaping of <code>{</code> expressions.</p></li>
+<li><p>Reshaping of pipelines of binary operations, including pipes.</p></li>
+<li><p>Selection of syntactic constructs, such as function arguments.</p></li>
+</ul>
+</div>
+<div class="section level2">
 <h2 id="limitations">Limitations<a class="anchor" aria-label="anchor" href="#limitations"></a>
 </h2>
 <p>codegrip currently uses the R parser to figure out the structure of your code. Because of this, it doesn’t work with malformed or partially written code. Your whole file must be valid R code for codegrip commands to work.</p>
