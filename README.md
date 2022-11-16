@@ -5,7 +5,7 @@
 [![R-CMD-check](https://github.com/lionel-/codegrip/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lionel-/codegrip/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-codegrip provides RStudio addins and Emacs commands for reshaping R code and navigating across syntactic constructs.
+codegrip provides [RStudio addins](http://rstudio.github.io/rstudioaddins/) and Emacs commands for reshaping R code and navigating across syntactic constructs.
 
 
 ### Reshaping
