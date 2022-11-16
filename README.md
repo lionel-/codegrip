@@ -10,43 +10,13 @@ codegrip provides RStudio addins and Emacs commands for reshaping R code and nav
 
 ### Reshaping
 
-`addin_reshape` lets you cycle between different shapes of function calls. For instance, reshaping transforms code from wide shape:
+`addin_reshape` lets you cycle between different shapes of function calls. For instance, reshaping transforms code from wide to long shape and vice versa.
 
-```r
-list(a, b, c)
-```
+<img src="man/figures/README/reshape-call.svg"/>
 
-to long shape (and vice versa):
+Note that for function definitions, `addin_reshape` cycles through two different long shapes. The traditional L form uses more horizontal space whereas the flat form uses less horizontal space and the arguments are always aligned at double indent:
 
-```r
-list(
-  a,
-  b,
-  c
-)
-```
-
-Note that for function definitions, `addin_reshape` cycles through two different long shapes. The traditional L form uses more horizontal space:
-
-```r
-my_function <- function(a,
-                        b,
-                        c) {
-  body
-}
-```
-
-The flat form uses less horizontal space and the arguments are always aligned at double indent:
-
-```r
-my_function <- function(
-    a,
-    b,
-    c
-) {
-  body
-}
-```
+<img src="man/figures/README/reshape-def.svg"/>
 
 
 ### Navigating
@@ -58,7 +28,11 @@ There are currently two motions implemented in codegrip: outwards and inwards.
 
 - `addin_move_outside` finds the first opening delimiter _before_ your cursor and steps outside it.
 
+<img src="man/figures/README/move.svg"/>
+
 These motions are handy for quick navigation across to quickly jump from a function argument to the corresponding function call. From there, you can reshape the whole call using `addin_reshape`.
+
+<img src="man/figures/README/move-reshape.svg"/>
 
 
 ## Installation
@@ -85,7 +59,7 @@ Not yet implemented:
 - `Alt + 2`: `addin_move_forwards`
 
 
-## TODO
+## Roadmap
 
 - Forward and backward motions.
 
