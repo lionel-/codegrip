@@ -1,6 +1,9 @@
 addin_move_outside <- function() {
   addin_move(move_outside_info)
 }
+addin_move_inside <- function() {
+  addin_move(move_inside_info)
+}
 addin_move_next <- function() {
   addin_move(move_next_info)
 }
