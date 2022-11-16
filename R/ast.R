@@ -160,6 +160,15 @@ delim_open_node_names <- c(
   "LBB"
 )
 
+is_delim_close <- function(data) {
+  xml_name(data) %in% delim_close_node_names
+}
+delim_close_node_names <- c(
+  "OP-RIGHT-PAREN",
+  "OP-RIGHT-BRACE",
+  "OP-RIGHT-BRACKET"
+)
+
 is_prefix_fn <- function(data) {
   xml_name(data) %in% prefix_fn_node_names
 }

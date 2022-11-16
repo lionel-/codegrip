@@ -115,18 +115,43 @@ test_that("can move to next and previous", {
 
 test_that("moving inside with cursor on whitespace", {
   info <- parse_info(text = "  foo()")
-  expect_null(move_inside_info(1, 1, info = info))
+  expect_equal(
+    move_inside_info(1, 1, info = info),
+    c(line = 1, col = 7)
+  )
 
   code <-
 "{
   foo()
 }"
   info <- parse_info(text = code)
-  expect_null(move_inside_info(2, 1, info = info))
+  expect_equal(
+    move_inside_info(1, 2, info = info),
+    c(line = 2, col = 7)
+  )
+  expect_equal(
+    move_inside_info(2, 1, info = info),
+    c(line = 2, col = 7)
+  )
 
   code <-
 "function() {
   bar()
+  1 + foo()
+}"
+  info <- parse_info(text = code)
+  expect_equal(
+    move_inside_info(3, 1, info = info),
+    c(line = 3, col = 11)
+  )
+})
+
+test_that("don't move past closing delims", {
+  code <-
+"{
+  {
+    NULL
+  }
   foo()
 }"
   info <- parse_info(text = code)

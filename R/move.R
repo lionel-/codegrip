@@ -22,47 +22,54 @@ move_outside_info <- function(line, col, ..., info) {
   }
 }
 
+node_extents <- function(node) {
+  data.frame(
+    start = xml_start(node),
+    end = xml_end(node)
+  )
+}
+
 move_inside_info <- function(line, col, ..., info) {
   xml <- parse_xml(info)
+
+  pos <- skip_space(lines(info), line, col)
+  line <- pos[["line"]]
+  col <- pos[["col"]]
 
   node <- node_at_position(line, col, data = xml)
   if (is_null(node)) {
     return(NULL)
   }
 
-  if (vctrs::vec_compare(df_pos(line, col), as_df_pos(node)) > 0) {
+  in_order <- keep(tree_suffix(node), is_terminal)
+
+  # Don't step beyond closing delimiters
+  is_close <- which(is_delim_close(in_order))
+  if (length(is_close)) {
+    in_order <- in_order[seq(1, is_close[[1]])]
+  }
+
+  can_step_in <- which(can_step_in(in_order))
+  if (!length(can_step_in)) {
     return(NULL)
   }
 
-  if (is_delim_open(node) || is_prefix_fn(node)) {
-    node <- node_parent(node)
-  } else {
-    # First parent: `expr` node. Second parent: `call` node.
-    parent <- node_parent(node)
-    if (!any(is_delim_open(xml_children(parent)))) {
-      node <- node_parent(parent)
-    }
-  }
+  inside_node <- in_order[[can_step_in[[1]] + 1L]]
+  inside_line <- xml_line1(inside_node)
+  inside_col <- xml_col1(inside_node)
 
-  set <- xml_children(node)
-  loc <- detect_index(set, is_delim_open)
-
-  if (!loc || length(set) == loc) {
-    return(NULL)
-  }
-
-  down <- set[[loc + 1]]
-  down_line <- xml_line1(down)
-  down_col <- xml_col1(down)
-
-  if (line == down_line && col == down_col) {
+  if (line == inside_line && col == inside_col) {
     return(NULL)
   }
 
   c(
-    line = down_line,
-    col = down_col
+    line = inside_line,
+    col = inside_col
   )
+}
+
+can_step_in <- function(data) {
+  is_delim_open(data)
 }
 
 move_next_info <- function(line, col, ..., info) {
