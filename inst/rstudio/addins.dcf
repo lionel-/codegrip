@@ -1,13 +1,3 @@
-Name: Move Right
-Description: Move to next expression.
-Binding: addin_move_next
-Interactive: false
-
-Name: Move Left
-Description: Move to previous expression.
-Binding: addin_move_previous
-Interactive: false
-
 Name: Move Outside
 Description: Move to containing expression.
 Binding: addin_move_outside
