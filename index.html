@@ -65,25 +65,17 @@
 <div class="section level3">
 <h3 id="reshaping">Reshaping<a class="anchor" aria-label="anchor" href="#reshaping"></a>
 </h3>
-<p><code>addin_reshape</code> lets you cycle between different shapes of function calls. For instance, reshaping transforms code from wide shape:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span></span></code></pre></div>
-<p>to long shape (and vice versa):</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  <span class="va">a</span>,</span>
-<span>  <span class="va">b</span>,</span>
-<span>  <span class="va">c</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<p><code>addin_reshape</code> lets you cycle between different shapes of function calls. For instance, reshaping transforms code from wide to long shape and vice versa.</p>
+<p><img src="reference/figures/README/reshape-call.svg" width="100%"></p>
 <p>Note that for function definitions, <code>addin_reshape</code> cycles through two different long shapes. The traditional L form uses more horizontal space:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a</span>,</span>
 <span>                        <span class="va">b</span>,</span>
 <span>                        <span class="va">c</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">body</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>The flat form uses less horizontal space and the arguments are always aligned at double indent:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span></span>
 <span>    <span class="va">a</span>,</span>
 <span>    <span class="va">b</span>,</span>
@@ -106,7 +98,7 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>The package is not yet on CRAN but you can install the development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"lionel-/codegrip"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
@@ -144,6 +136,7 @@
 <li><p>Reshaping of repeated calls like <code>foo(...)(...)</code>. This will help reshaping data.table pipelines, e.g. <code>DT[...][...]</code>.</p></li>
 <li><p>Reshaping of <code>{</code> expressions.</p></li>
 <li><p>Reshaping of pipelines of binary operations, including pipes.</p></li>
+<li><p>Columnar formatting of <code><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tibble::tribble()</a></code> calls.</p></li>
 <li><p>Selection of syntactic constructs, such as function arguments.</p></li>
 </ul>
 </div>
