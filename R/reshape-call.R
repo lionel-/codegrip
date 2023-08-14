@@ -57,6 +57,10 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
     return(node_text(node, info = info))
   }
 
+  if (any(xml_name(set) == "COMMENT")) {
+    return(node_text(node, info = info))
+  }
+
   prefix <- node_call_type(node) == "prefix"
 
   if (node_call_needs_space_before_paren(node)) {
@@ -144,8 +148,7 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
 
   last <- paste0(
     arg_text(args_nodes[[n_args]]),
-    if (!L) "\n",
-    if (!L) spaces(current_indent_n),
+    if (!L && !prefix) paste0("\n", spaces(current_indent_n)),
     ")"
   )
 
