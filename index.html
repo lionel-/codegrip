@@ -123,6 +123,19 @@
 </div>
 </div>
 <div class="section level2">
+<h2 id="using-in-visual-studio-code">Using in Visual Studio Code<a class="anchor" aria-label="anchor" href="#using-in-visual-studio-code"></a>
+</h2>
+<p><code>addin_reshape</code> is available for keybinding in VS Code. See <a href="https://github.com/REditorSupport/vscode-R/wiki/RStudio-addin-support#enabling-rstudio-addin-support" class="external-link">here</a> for instructions on enabling general addin support.</p>
+<p>Once addins are enabled, add the following to <code>keybindings.json</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"Alt+tab"</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommand"</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Reshape expressions longer or wider"</span><span class="fu">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus"</span><span class="fu">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"args"</span><span class="fu">:</span> <span class="st">"codegrip::addin_reshape()"</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="roadmap">Roadmap<a class="anchor" aria-label="anchor" href="#roadmap"></a>
 </h2>
 <ul>
