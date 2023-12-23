@@ -59,6 +59,22 @@ Not yet implemented:
 - `Alt + 2`: `addin_move_forwards`
 
 
+## Using in Visual Studio Code
+
+`addin_reshape` is available for keybinding in VS Code. See [here](https://github.com/REditorSupport/vscode-R/wiki/RStudio-addin-support#enabling-rstudio-addin-support) for instructions on enabling general addin support. 
+
+Once addins are enabled, add the following to `keybindings.json`:
+
+```json
+{
+  "key": "Alt+tab",
+  "command": "r.runCommand",
+  "description": "Reshape expressions longer or wider",
+  "when": "editorTextFocus",
+  "args": "codegrip::addin_reshape()"
+}
+```
+
 ## Roadmap
 
 - Forward and backward motions.
