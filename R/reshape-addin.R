@@ -1,3 +1,4 @@
+#' @export
 addin_reshape <- function() {
   tryCatch(
     addin_reshape_unsafe(),
