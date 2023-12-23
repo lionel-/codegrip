@@ -4,9 +4,17 @@
 \name{codegrip-package}
 \alias{codegrip}
 \alias{codegrip-package}
-\title{codegrip: Shape R code}
+\title{codegrip: Syntax-Based Editing and Navigation of R Code}
 \description{
-Shape R code.
+Provides addins for reshaping R code and navigating across syntactic constructs.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/lionel-/codegrip}
+  \item Report bugs at \url{https://github.com/lionel-/codegrip/issues}
+}
+
 }
 \author{
 \strong{Maintainer}: Lionel Henry \email{lionel@posit.co}
