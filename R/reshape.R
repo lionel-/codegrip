@@ -26,9 +26,8 @@ can_reshape <- function(data) {
 }
 
 reshape_info <- function(line, col, ..., info, to = NULL) {
-  xml <- parse_xml(info)
-
-  call <- find_function_call(line, col, data = xml)
+  info <- parse_info_complete(info)
+  call <- find_function_call(line, col, data = info$xml)
   if (is_null(call)) {
     return()
   }
