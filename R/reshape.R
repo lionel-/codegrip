@@ -25,6 +25,7 @@ can_reshape <- function(data) {
   is_delim_open(data)
 }
 
+#' @export
 reshape_info <- function(line, col, ..., info, to = NULL) {
   info <- parse_info_complete(info)
   call <- find_function_call(line, col, data = info$xml)
