@@ -29,9 +29,17 @@ can_reshape <- function(data) {
 reshape_info <- function(line, col, ..., info, to = NULL) {
   info <- parse_info_complete(info)
   call <- find_function_call(line, col, data = info$xml)
+
   if (is_null(call)) {
     return()
   }
+
+  pos <- node_positions(call)
+  cursor_lines <- info$lines[seq(from = pos$line1, to = line)]
+  n <- length(cursor_lines)
+  cursor_lines[[n]] <- substring(cursor_lines[[n]], 1, col)
+  cursor_lines[[1]] <- substring(cursor_lines[[1]], pos$col1)
+  n_cursor_chars <- sum(nchar(gsub("\\s", "", cursor_lines)))
 
   if (is_null(to)) {
     if (node_call_type(call) == "prefix") {
@@ -66,12 +74,14 @@ reshape_info <- function(line, col, ..., info, to = NULL) {
     abort("Unexpected value for `to`.", .internal = TRUE)
   )
 
-  pos <- node_positions(call)
+  n_char_re <- sprintf("^((\\s*\\S){%s}).*", n_cursor_chars)
+  n_cursor_chars <- nchar(gsub(n_char_re, "\\1", reshaped))
 
   list(
     reshaped = reshaped,
     start = c(line = pos$line1, col = pos$col1),
-    end = c(line = pos$line2, col = pos$col2 + 1L)
+    end = c(line = pos$line2, col = pos$col2 + 1L),
+    cursor = c(char = n_cursor_chars)
   )
 }
 
