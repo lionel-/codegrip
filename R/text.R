@@ -31,6 +31,11 @@ skip_space <- function(lines, line, col, ...) {
   c(line = i, col = nchar(lines[[i]]))
 }
 
+count_nonspace_chars_to <- function(lines, line, col) {
+  lines[[line]] <- substr(lines[[line]], 1, col)
+  sum(nchar(gsub("\\s", "", lines)))
+}
+
 line_is_at_whitespace <- function(line, col) {
   at_end <- col == nchar(line) + 1
   at_end || grepl(rx_spaces, substr(line, col, col))
