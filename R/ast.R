@@ -8,19 +8,33 @@ parse_xml <- function(info) {
   read_xml(xml_text)
 }
 
-parse_info <- function(file = "", text = NULL, lines = NULL) {
+parse_info <- function(file = "", text = NULL, lines = NULL, xml = NULL) {
   if (!is_null(text)) {
     lines <- as_lines(text)
   }
   list(
     file = file,
-    lines = lines
+    lines = lines,
+    xml = xml
   )
 }
 
-is_info <- function(x) {
-  is.list(x) && all(c("file", "lines") %in% names(x))
+parse_info_complete <- function(info) {
+  if (is.null(info$lines)) {
+    info$lines <- readLines(info$file)
+  }
+
+  if (is.null(info$xml)) {
+    info$xml <- parse_xml(info)
+  }
+
+  info
 }
+
+is_info <- function(x) {
+  is.list(x) && all(c("file", "lines", "xml") %in% names(x))
+}
+
 check_info <- function(info,
                        arg = caller_arg(info),
                        call = caller_env()) {
