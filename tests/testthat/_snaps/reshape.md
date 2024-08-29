@@ -64,16 +64,14 @@
     Output
       i: 1
       function(
-          a
-      ) NULL
+          a) NULL
       
       i: 2
       function(a) NULL
       
       i: 3
       function(
-          a
-      ) NULL
+          a) NULL
       
     Code
       code <- "function(a, b = 1, c) NULL"
@@ -88,8 +86,7 @@
       function(
           a,
           b = 1,
-          c
-      ) NULL
+          c) NULL
       
       i: 3
       function(a, b = 1, c) NULL
@@ -108,8 +105,7 @@
     Output
       i: 1
       if (
-          a
-      ) NULL
+          a) NULL
       
       i: 2
       if (a) NULL
@@ -120,8 +116,7 @@
     Output
       i: 1
       if (
-          a
-      ) b else c
+          a) b else c
       
       i: 2
       if (a) b else c
@@ -132,8 +127,7 @@
     Output
       i: 1
       while (
-          a
-      ) NULL
+          a) NULL
       
       i: 2
       while (a) NULL
@@ -368,15 +362,11 @@
       snap_reshape_cycle(2, code)
     Output
       i: 1
-      foo(
-        x,
-        y # comment
+      foo(x, y # comment
       )
       
       i: 2
-      foo(
-        x,
-        y # comment
+      foo(x, y # comment
       )
       
 

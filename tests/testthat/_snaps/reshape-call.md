@@ -14,8 +14,7 @@
       )
       
       function(
-          a
-      ) NULL
+          a) NULL
     Code
       print_longer("(b, c)")
     Output
@@ -26,8 +25,7 @@
       
       function(
           b,
-          c
-      ) NULL
+          c) NULL
     Code
       print_longer("(a, b, c)")
     Output
@@ -40,8 +38,7 @@
       function(
           a,
           b,
-          c
-      ) NULL
+          c) NULL
     Code
       print_longer("(a = 1, b, c = 3)")
     Output
@@ -54,8 +51,7 @@
       function(
           a = 1,
           b,
-          c = 3
-      ) NULL
+          c = 3) NULL
     Code
       # Leading indentation is preserved. First line is not indented
       # because the reshaped text is meant to be inserted at the node
@@ -73,8 +69,7 @@
         )
       
         function(
-            a
-        ) NULL
+            a) NULL
     Code
       print_longer("  (a, b)")
     Output
@@ -85,8 +80,7 @@
       
         function(
             a,
-            b
-        ) NULL
+            b) NULL
     Code
       # Multiline args are indented as is
       print_longer("(a, b = foo(\n  bar\n), c)")
@@ -104,8 +98,7 @@
           b = foo(
             bar
           ),
-          c
-      ) NULL
+          c) NULL
     Code
       print_longer("(a, b =\n  2, c)")
     Output
@@ -120,8 +113,7 @@
           a,
           b =
             2,
-          c
-      ) NULL
+          c) NULL
     Code
       print_longer("  (a, b = foo(\n    bar  \n  ), c)")
     Output
@@ -138,8 +130,7 @@
             b = foo(
               bar  
             ),
-            c
-        ) NULL
+            c) NULL
     Code
       # Wrong indentation is preserved
       print_longer("(a, b = foo(\nbar\n), c)")
@@ -157,8 +148,7 @@
           b = foo(
           bar
           ),
-          c
-      ) NULL
+          c) NULL
     Code
       print_longer("  (a, b = foo(\n  bar\n), c)")
     Output
@@ -175,8 +165,7 @@
             b = foo(
             bar
           ),
-            c
-        ) NULL
+            c) NULL
 
 # can reshape call longer (L shape)
 
