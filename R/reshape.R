@@ -44,12 +44,12 @@ can_reshape <- function(data) {
 reshape_info <- function(line, col, ..., info, to = NULL) {
   info <- parse_info_complete(info)
   call <- find_function_call(line, col, data = info$xml)
-  call_lines <- node_text_lines(call, info = info)
 
   if (is_null(call)) {
     return()
   }
 
+  call_lines <- node_text_lines(call, info = info)
   pos <- node_positions(call)
   n_ns_chars <- count_nonspace_chars_to(
     call_lines,
