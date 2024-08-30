@@ -25,6 +25,21 @@ can_reshape <- function(data) {
   is_delim_open(data)
 }
 
+#' Prepare Reshape Information
+#'
+#' Prior to performing an editor-specific operation, prepare minimal
+#' information needed to perform the action.
+#'
+#' @param line,col `integer` The location of the cursor as the focus of the
+#'   reshape action.
+#' @param ... Arguments unused
+#' @param info `list` of named elements `file` (`string`), `lines`
+#'   (`character()`) and `xml` ([`xml2::xml_new_document()`]), as produced
+#'   using `parse_info()`.
+#' @param to `string` An optional hint for the reshape action. Expecting one of
+#'   `"wide"` (single line call), `"L"` (indented to the call left parenthesis)
+#'   or `"long"` (arguments indented by one indentation).
+#'
 #' @export
 reshape_info <- function(line, col, ..., info, to = NULL) {
   info <- parse_info_complete(info)
