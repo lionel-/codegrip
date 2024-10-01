@@ -68,10 +68,8 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
   if (prefix) {
     body <- node_text(node_call_body(node), info = info)
     suffix <- paste0(" ", body)
-    indent_factor <- 2
   } else {
     suffix <- ""
-    indent_factor <- 1
   }
 
   fn <- node_text(set[[1]], info = info)
@@ -82,11 +80,7 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
     new_indent_n <- xml_col2(left_paren)
   } else {
     fn <- paste0(fn, left_paren_text, "\n")
-    if (prefix) {
-      new_indent_n <- current_indent_n + base_indent * indent_factor
-    } else {
-      new_indent_n <- current_indent_n + base_indent
-    }
+    new_indent_n <- current_indent_n + base_indent
   }
 
   if (L) {
@@ -125,7 +119,7 @@ node_call_longer <- function(node, ..., L = FALSE, info) {
     if (L) {
       arg_indent_n <- new_indent_n - current_indent_n - arg_parent_indent_n
     } else {
-      arg_indent_n <- base_indent * indent_factor - arg_parent_indent_n
+      arg_indent_n <- base_indent - arg_parent_indent_n
     }
 
     if (length(arg)) {
