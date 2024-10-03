@@ -25,12 +25,37 @@ can_reshape <- function(data) {
   is_delim_open(data)
 }
 
+#' Prepare Reshape Information
+#'
+#' Prior to performing an editor-specific operation, prepare minimal
+#' information needed to perform the action.
+#'
+#' @param line,col `integer` The location of the cursor as the focus of the
+#'   reshape action.
+#' @param ... Arguments unused
+#' @param info `list` of named elements `file` (`string`), `lines`
+#'   (`character()`) and `xml` ([`xml2::xml_new_document()`]), as produced
+#'   using `parse_info()`.
+#' @param to `string` An optional hint for the reshape action. Expecting one of
+#'   `"wide"` (single line call), `"L"` (indented to the call left parenthesis)
+#'   or `"long"` (arguments indented by one indentation).
+#'
+#' @export
 reshape_info <- function(line, col, ..., info, to = NULL) {
   info <- parse_info_complete(info)
   call <- find_function_call(line, col, data = info$xml)
+
   if (is_null(call)) {
     return()
   }
+
+  call_lines <- node_text_lines(call, info = info)
+  pos <- node_positions(call)
+  n_ns_chars <- count_nonspace_chars_to(
+    call_lines,
+    line = 1L + line - pos$line1,
+    col = if (line == 1) 1L + col - pos$col1 else col
+  )
 
   if (is_null(to)) {
     if (node_call_type(call) == "prefix") {
@@ -65,12 +90,14 @@ reshape_info <- function(line, col, ..., info, to = NULL) {
     abort("Unexpected value for `to`.", .internal = TRUE)
   )
 
-  pos <- node_positions(call)
+  n_char_re <- sprintf("^((\\s*\\S){%s}).*", n_ns_chars)
+  n_char <- nchar(gsub(n_char_re, "\\1", reshaped))
 
   list(
     reshaped = reshaped,
     start = c(line = pos$line1, col = pos$col1),
-    end = c(line = pos$line2, col = pos$col2 + 1L)
+    end = c(line = pos$line2, col = pos$col2 + 1L),
+    cursor = c(char = n_char)
   )
 }
 

@@ -1,6 +1,6 @@
 Package: codegrip
 Title: Syntax-Based Editing and Navigation of R Code
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: c(
     person("Lionel", "Henry", ,"lionel@posit.co", c("aut", "cre")),
     person("Posit PBC", role = c("cph", "fnd"))
