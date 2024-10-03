@@ -14,7 +14,7 @@
       )
       
       function(
-          a
+        a
       ) NULL
     Code
       print_longer("(b, c)")
@@ -25,8 +25,8 @@
       )
       
       function(
-          b,
-          c
+        b,
+        c
       ) NULL
     Code
       print_longer("(a, b, c)")
@@ -38,9 +38,9 @@
       )
       
       function(
-          a,
-          b,
-          c
+        a,
+        b,
+        c
       ) NULL
     Code
       print_longer("(a = 1, b, c = 3)")
@@ -52,9 +52,9 @@
       )
       
       function(
-          a = 1,
-          b,
-          c = 3
+        a = 1,
+        b,
+        c = 3
       ) NULL
     Code
       # Leading indentation is preserved. First line is not indented
@@ -73,7 +73,7 @@
         )
       
         function(
-            a
+          a
         ) NULL
     Code
       print_longer("  (a, b)")
@@ -84,8 +84,8 @@
         )
       
         function(
-            a,
-            b
+          a,
+          b
         ) NULL
     Code
       # Multiline args are indented as is
@@ -100,11 +100,11 @@
       )
       
       function(
-          a,
-          b = foo(
-            bar
-          ),
-          c
+        a,
+        b = foo(
+          bar
+        ),
+        c
       ) NULL
     Code
       print_longer("(a, b =\n  2, c)")
@@ -117,10 +117,10 @@
       )
       
       function(
-          a,
-          b =
-            2,
-          c
+        a,
+        b =
+          2,
+        c
       ) NULL
     Code
       print_longer("  (a, b = foo(\n    bar  \n  ), c)")
@@ -134,11 +134,11 @@
         )
       
         function(
-            a,
-            b = foo(
-              bar  
-            ),
-            c
+          a,
+          b = foo(
+            bar  
+          ),
+          c
         ) NULL
     Code
       # Wrong indentation is preserved
@@ -153,11 +153,11 @@
       )
       
       function(
-          a,
-          b = foo(
-          bar
-          ),
-          c
+        a,
+        b = foo(
+        bar
+        ),
+        c
       ) NULL
     Code
       print_longer("  (a, b = foo(\n  bar\n), c)")
@@ -171,11 +171,11 @@
         )
       
         function(
-            a,
-            b = foo(
-            bar
-          ),
-            c
+          a,
+          b = foo(
+          bar
+        ),
+          c
         ) NULL
 
 # can reshape call longer (L shape)

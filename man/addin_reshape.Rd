@@ -23,7 +23,7 @@ list(
 Note that for function definitions, \code{addin_reshape()} cycles through two
 different long shapes. The traditional L form uses more horizontal space
 whereas the flat form uses less horizontal space and the arguments are
-always aligned at double indent:
+always aligned at single indent:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{foo <- function(a, b, c) \{
   NULL

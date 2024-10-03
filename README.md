@@ -14,7 +14,7 @@ codegrip provides [RStudio addins](http://rstudio.github.io/rstudioaddins/) and 
 
 <img src="man/figures/README/reshape-call.svg"/>
 
-Note that for function definitions, `addin_reshape` cycles through two different long shapes. The traditional L form uses more horizontal space whereas the flat form uses less horizontal space and the arguments are always aligned at double indent:
+Note that for function definitions, `addin_reshape` cycles through two different long shapes. The traditional L form uses more horizontal space whereas the flat form uses less horizontal space and the arguments are always aligned at single indent:
 
 <img src="man/figures/README/reshape-def.svg"/>
 
@@ -61,7 +61,7 @@ Not yet implemented:
 
 ## Using in Visual Studio Code
 
-`addin_reshape` is available for keybinding in VS Code. See [here](https://github.com/REditorSupport/vscode-R/wiki/RStudio-addin-support#enabling-rstudio-addin-support) for instructions on enabling general addin support. 
+`addin_reshape` is available for keybinding in VS Code. See [here](https://github.com/REditorSupport/vscode-R/wiki/RStudio-addin-support#enabling-rstudio-addin-support) for instructions on enabling general addin support.
 
 Once addins are enabled, add the following to `keybindings.json`:
 

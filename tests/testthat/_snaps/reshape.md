@@ -64,7 +64,7 @@
     Output
       i: 1
       function(
-          a
+        a
       ) NULL
       
       i: 2
@@ -72,7 +72,7 @@
       
       i: 3
       function(
-          a
+        a
       ) NULL
       
     Code
@@ -86,9 +86,9 @@
       
       i: 2
       function(
-          a,
-          b = 1,
-          c
+        a,
+        b = 1,
+        c
       ) NULL
       
       i: 3
@@ -108,7 +108,7 @@
     Output
       i: 1
       if (
-          a
+        a
       ) NULL
       
       i: 2
@@ -120,7 +120,7 @@
     Output
       i: 1
       if (
-          a
+        a
       ) b else c
       
       i: 2
@@ -132,7 +132,7 @@
     Output
       i: 1
       while (
-          a
+        a
       ) NULL
       
       i: 2
